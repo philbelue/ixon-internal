@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discovery Prep — iAutomation / CAS Holdings | April 16, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ixon-blue: #1059D2;
+    --ixon-dark: #021752;
+    --ixon-offwhite: #F3F4FA;
+    --ixon-yellow: #FACD00;
+    --ixon-grey: #626262;
+    --ixon-light-grey: #E8E9F0;
+    --green: #1B9E5A;
+    --orange: #E8850C;
+    --red: #D93025;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: #fff;
+    color: var(--ixon-dark);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* — SIDEBAR — */
+  .sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--ixon-dark);
+    padding: 24px 0;
+    z-index: 100;
+  }
+  .sidebar-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.35);
+    padding: 0 16px;
+    margin-bottom: 12px;
+  }
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .sidebar a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.07);
+    border-left-color: var(--ixon-yellow);
+  }
+  .sidebar a.active {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+    border-left-color: var(--ixon-yellow);
+  }
+  .sidebar .dot-nav {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .sidebar .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    margin: 12px 16px;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 32px 60px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* — HEADER — */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 3px solid var(--ixon-dark);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+  }
+  .header-left h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--ixon-dark);
+    letter-spacing: -0.3px;
+  }
+  .header-left .subtitle {
+    font-size: 14px;
+    color: var(--ixon-grey);
+    margin-top: 2px;
+  }
+  .header-right {
+    text-align: right;
+    font-size: 13px;
+    color: var(--ixon-grey);
+  }
+  .header-right .date {
+    font-weight: 700;
+    color: var(--ixon-dark);
+    font-size: 14px;
+  }
+
+  /* — KPI ROW — */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .kpi-card {
+    background: var(--ixon-offwhite);
+    border-radius: 10px;
+    padding: 22px 20px;
+    text-align: center;
+    border-top: 4px solid var(--ixon-blue);
+  }
+  .kpi-card.accent { border-top-color: var(--ixon-yellow); }
+  .kpi-card.green { border-top-color: var(--green); }
+  .kpi-card.orange { border-top-color: var(--orange); }
+  .kpi-value {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--ixon-dark);
+    line-height: 1.1;
+  }
+  .kpi-value.small { font-size: 20px; }
+  .kpi-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ixon-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-top: 6px;
+  }
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--ixon-blue);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* — SECTION — */
+  .section {
+    margin-bottom: 32px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-header .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ixon-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* — CARDS — */
+  .info-card {
+    background: var(--ixon-offwhite);
+    border-radius: 8px;
+    padding: 20px 24px;
+    border-left: 4px solid var(--ixon-blue);
+    margin-bottom: 14px;
+  }
+  .info-card.yellow { border-left-color: var(--ixon-yellow); }
+  .info-card.green { border-left-color: var(--green); }
+  .info-card.orange { border-left-color: var(--orange); }
+  .info-card.dark { border-left-color: var(--ixon-dark); }
+  .info-card.red { border-left-color: var(--red); }
+  .info-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ixon-dark);
+    margin-bottom: 6px;
+  }
+  .info-card p, .info-card li {
+    font-size: 13px;
+    color: var(--ixon-grey);
+    line-height: 1.6;
+  }
+  .info-card ul { padding-left: 16px; }
+  .info-card li { margin-bottom: 3px; }
+
+  /* — DEAL CARDS — */
+  .deal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .deal-card {
+    background: #fff;
+    border: 1px solid var(--ixon-light-grey);
+    border-radius: 8px;
+    padding: 18px 20px;
+    position: relative;
+  }
+  .deal-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: 8px 0 0 8px;
+    background: var(--ixon-blue);
+  }
+  .deal-card.green::before { background: var(--green); }
+  .deal-card.yellow::before { background: var(--ixon-yellow); }
+  .deal-card.orange::before { background: var(--orange); }
+
+  .deal-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ixon-dark);
+    margin-bottom: 4px;
+  }
+  .deal-role {
+    font-size: 12px;
+    color: var(--ixon-blue);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .deal-meta {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .badge-dark { background: var(--ixon-dark); color: #fff; }
+  .badge-blue { background: var(--ixon-blue); color: #fff; }
+  .badge-green { background: #E6F7EE; color: var(--green); }
+  .badge-yellow { background: #FFF8E0; color: #8B6914; }
+  .badge-grey { background: var(--ixon-offwhite); color: var(--ixon-grey); border: 1px solid var(--ixon-light-grey); }
+  .badge-orange { background: #FFF3E6; color: var(--orange); }
+  .badge-red { background: #FDECEA; color: var(--red); }
+
+  .deal-detail {
+    font-size: 13px;
+    color: var(--ixon-grey);
+    line-height: 1.6;
+  }
+  .deal-detail li {
+    margin-left: 16px;
+    margin-bottom: 2px;
+  }
+
+  /* — QUESTION CARDS — */
+  .q-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .q-card {
+    background: #fff;
+    border: 1px solid var(--ixon-light-grey);
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: relative;
+  }
+  .q-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: 8px 0 0 8px;
+    background: var(--ixon-blue);
+  }
+  .q-card.kathy::before { background: var(--green); }
+  .q-card.jim::before { background: var(--orange); }
+  .q-card.both::before { background: var(--ixon-yellow); }
+  .q-card.inbound::before { background: var(--red); }
+
+  .q-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .q-label.kathy { color: var(--green); }
+  .q-label.jim { color: var(--orange); }
+  .q-label.both { color: #8B6914; }
+  .q-label.inbound { color: var(--red); }
+
+  .q-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ixon-dark);
+    margin-bottom: 4px;
+  }
+  .q-why {
+    font-size: 12px;
+    color: var(--ixon-grey);
+    font-style: italic;
+  }
+
+  /* — THEIR QUESTIONS TABLE — */
+  .their-q {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .their-q th {
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--ixon-grey);
+    padding: 8px 12px;
+    border-bottom: 2px solid var(--ixon-light-grey);
+  }
+  .their-q td {
+    padding: 12px 12px;
+    border-bottom: 1px solid var(--ixon-light-grey);
+    color: var(--ixon-dark);
+    vertical-align: top;
+  }
+  .their-q .likely {
+    font-weight: 600;
+    color: var(--ixon-dark);
+  }
+  .their-q .answer {
+    color: var(--ixon-grey);
+  }
+  .their-q .source-tag {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-right: 4px;
+  }
+  .tag-jim { background: #FFF3E6; color: var(--orange); }
+  .tag-kathy { background: #E6F7EE; color: var(--green); }
+  .tag-both { background: #FFF8E0; color: #8B6914; }
+
+  /* — STRATEGY BOXES — */
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .strategy-box {
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .strategy-box.do {
+    background: #E6F7EE;
+    border: 1px solid #C1E8D4;
+  }
+  .strategy-box.avoid {
+    background: #FDECEA;
+    border: 1px solid #F5C6C0;
+  }
+  .strategy-box h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 8px;
+  }
+  .strategy-box.do h4 { color: var(--green); }
+  .strategy-box.avoid h4 { color: var(--red); }
+  .strategy-box ul {
+    font-size: 13px;
+    color: var(--ixon-grey);
+    line-height: 1.7;
+    padding-left: 16px;
+  }
+
+  /* — CONTACT TABLE — */
+  .contact-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .contact-table th {
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--ixon-grey);
+    padding: 8px 12px;
+    border-bottom: 2px solid var(--ixon-light-grey);
+  }
+  .contact-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--ixon-light-grey);
+    color: var(--ixon-dark);
+  }
+
+  /* — CALLOUT BAR — */
+  .callout-bar {
+    background: var(--ixon-dark);
+    border-radius: 6px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .callout-bar .tag {
+    background: var(--ixon-yellow);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--ixon-dark);
+    white-space: nowrap;
+  }
+  .callout-bar .text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* — FOOTER — */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 2px solid var(--ixon-light-grey);
+    font-size: 11px;
+    color: var(--ixon-grey);
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- SIDEBAR NAV -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-label">On-the-fly Nav</div>
+    <a href="#context"><span class="dot-nav" style="background:var(--ixon-dark)"></span>Deal Context</a>
+    <a href="#company"><span class="dot-nav" style="background:var(--ixon-blue)"></span>CAS Holdings</a>
+    <a href="#stakeholders"><span class="dot-nav" style="background:var(--green)"></span>Stakeholders</a>
+    <div class="divider"></div>
+    <a href="#discovery"><span class="dot-nav" style="background:var(--ixon-yellow)"></span>Discovery Qs</a>
+    <a href="#their-qs"><span class="dot-nav" style="background:#D93025"></span>They'll Ask</a>
+    <div class="divider"></div>
+    <a href="#icp"><span class="dot-nav" style="background:var(--ixon-blue)"></span>ICP Fit</a>
+    <a href="#strategy"><span class="dot-nav" style="background:var(--ixon-dark)"></span>Call Strategy</a>
+    <a href="#nextsteps"><span class="dot-nav" style="background:var(--green)"></span>Next Steps</a>
+    <a href="#max"><span class="dot-nav" style="background:var(--ixon-blue)"></span>Max Brief</a>
+    <a href="#contacts"><span class="dot-nav" style="background:var(--ixon-dark)"></span>Contacts</a>
+  </nav>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Discovery Call Prep — iAutomation</h1>
+      <div class="subtitle">CAS Holdings · Great Demo! Framework · Phil Belue + Brandon Penrod</div>
+    </div>
+    <div class="header-right">
+      <div class="date">April 16, 2026 · 9:00 AM EST</div>
+      <div>Google Meet · 60 min</div>
+    </div>
+  </div>
+
+  <!-- KPI ROW — Situational Context -->
+  <div class="kpi-row">
+    <div class="kpi-card green">
+      <div class="kpi-value small">VP Sales</div>
+      <div class="kpi-label">Kathy Cesca</div>
+      <div class="kpi-sub">Leading the call</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-value small">App Eng</div>
+      <div class="kpi-label">Jim Mullins</div>
+      <div class="kpi-sub">Did the comparison</div>
+    </div>
+    <div class="kpi-card accent">
+      <div class="kpi-value small">CEO</div>
+      <div class="kpi-label">Pat McDermott</div>
+      <div class="kpi-sub">Not on call — follow-up</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value small">Dual Opp</div>
+      <div class="kpi-label">Channel + End User</div>
+      <div class="kpi-sub">Distribution + RND machines</div>
+    </div>
+  </div>
+
+  <!-- DEAL STORY -->
+  <div class="section" id="context">
+    <div class="section-header">
+      <div class="dot" style="background:var(--ixon-dark)"></div>
+      <h2>Deal Origin & Context — What We Know</h2>
+    </div>
+    <div class="info-card dark">
+      <h3>How We Got Here</h3>
+      <p>Brandon met <strong>Patrick McDermott</strong> at a <strong>PMMI event</strong> in Feb 2026. Pat asked his application engineer to benchmark IXON against their current offering. On March 18, <strong>Kathy Cesca</strong> (VP Sales) proactively requested this meeting because "our team has conducted some comparisons with our current offerings, and we have a few additional questions." She delayed the call 3+ weeks to assemble the right people — this is not casual browsing. Pat declined yesterday's invite but explicitly told Kathy to proceed.</p>
+    </div>
+    <div class="info-card yellow">
+      <h3>What They Already Know</h3>
+      <ul>
+        <li>Their app engineering team completed a competitive comparison — expect specific, informed questions</li>
+        <li>They have an <strong>incumbent remote access solution</strong> (likely B&R/ABB SRA given Pat's 18 years at B&R)</li>
+        <li>They found enough differentiation to warrant a dedicated meeting with their VP Sales and lead engineer</li>
+        <li>Brandon's original pitch framed IXON around "OEMs similar to RND" — their own machine-building division</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- COMPANY OVERVIEW -->
+  <div class="section" id="company">
+    <div class="section-header">
+      <div class="dot" style="background:var(--ixon-blue)"></div>
+      <h2>CAS Holdings — Company Overview</h2>
+    </div>
+    <div class="deal-grid">
+      <div class="deal-card">
+        <div class="deal-name">iAutomation</div>
+        <div class="deal-role">Value-Added Distributor + Systems Integrator</div>
+        <div class="deal-meta">
+          <span class="badge badge-dark">~160 employees</span>
+          <span class="badge badge-grey">Franklin, MA + Richmond, VA</span>
+        </div>
+        <ul class="deal-detail">
+          <li>Distributes 50+ brands: ABB, Festo, Rittal, Balluff, Panasonic, Yamaha</li>
+          <li>Sales coverage Maine to Florida — OEM machine builders + end users</li>
+          <li>Panel building, system integration, engineering services</li>
+          <li>Online store at shop.i-automation.com</li>
+          <li>Lists "IIoT & Smart Manufacturing" but <strong>no dedicated remote access product</strong></li>
+        </ul>
+      </div>
+      <div class="deal-card yellow">
+        <div class="deal-name">RND Automation</div>
+        <div class="deal-role">Custom Packaging Machine Builder (OEM)</div>
+        <div class="deal-meta">
+          <span class="badge badge-dark">51–200 employees</span>
+          <span class="badge badge-grey">Lakewood Ranch, FL</span>
+        </div>
+        <ul class="deal-detail">
+          <li>Builds HFFS, VFFS, QuickPouch, robotic palletizing</li>
+          <li>Serves pharma, medical device, food & bev, consumer products</li>
+          <li><strong>These machines need remote access for after-sales service</strong></li>
+          <li>Natural IXON end-user — deploy on every machine shipped</li>
+        </ul>
+      </div>
+      <div class="deal-card">
+        <div class="deal-name">PanelTEK Automation</div>
+        <div class="deal-role">Custom Control Panel Assembly</div>
+        <div class="deal-meta">
+          <span class="badge badge-grey">Fond du Lac, WI</span>
+        </div>
+        <ul class="deal-detail">
+          <li>Builds custom control panels — potential to embed IXrouters at panel stage</li>
+        </ul>
+      </div>
+      <div class="deal-card orange">
+        <div class="deal-name">PE Ownership: Saw Mill Capital</div>
+        <div class="deal-role">$25M–$200M Portfolio · Briarcliff Manor, NY</div>
+        <div class="deal-meta">
+          <span class="badge badge-orange">Growth mandate</span>
+        </div>
+        <ul class="deal-detail">
+          <li>Aggressive acquisition strategy — 5 acquisitions since 2017</li>
+          <li>Stated goal: triple combined revenue</li>
+          <li>Consolidated under CAS Holdings brand Feb 2022</li>
+          <li>PE lens = recurring revenue, platform differentiation, margin expansion</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAKEHOLDER PROFILES -->
+  <div class="section" id="stakeholders">
+    <div class="section-header">
+      <div class="dot" style="background:var(--green)"></div>
+      <h2>Stakeholder Profiles — On the Call</h2>
+    </div>
+
+    <div class="deal-grid">
+      <div class="deal-card green">
+        <div class="deal-name">Kathy Cesca</div>
+        <div class="deal-role">VP of Sales · 845.517.7768 · kcesca@i-automation.com</div>
+        <div class="deal-meta">
+          <span class="badge badge-green">Leading Call</span>
+          <span class="badge badge-grey">Pearl River, NY</span>
+        </div>
+        <ul class="deal-detail">
+          <li><strong>Background:</strong> CS degree → Keyence (IT → technical sales, 7 yrs) → Panasonic → Carlo Gavazzi → Action Automation → iAutomation since ~2013</li>
+          <li><strong>Promoted to VP Sales:</strong> Nov 2020 — she built this sales org</li>
+          <li><strong>Evaluates through:</strong> "Can my team sell this? Does it complete our offering?"</li>
+          <li><strong>Keyence background</strong> means she understands high-margin technical sales models and recurring revenue</li>
+          <li><strong>Key signal:</strong> She proactively requested this meeting without waiting for Pat — she has autonomy and internal momentum</li>
+        </ul>
+      </div>
+      <div class="deal-card orange">
+        <div class="deal-name">Jim Mullins</div>
+        <div class="deal-role">Applications Engineering · High Point, NC · jmullins@i-automation.com</div>
+        <div class="deal-meta">
+          <span class="badge badge-orange">Technical Evaluator</span>
+          <span class="badge badge-grey">20+ years at iAutomation</span>
+        </div>
+        <ul class="deal-detail">
+          <li><strong>Background:</strong> BS Lawrence Tech + MS Univ South Florida → Honeywell Aerospace → Wright Industries → Klockner Packaging → Integrated Motion → iAutomation</li>
+          <li><strong>Former VP Engineering</strong> (2006–2019) → moved to App Eng by choice — prefers hands-on</li>
+          <li><strong>Deep in:</strong> CODESYS, B&R Automation Studio, HMI design, OPC-UA</li>
+          <li><strong>Almost certainly did the comparison</strong> Pat referenced in February</li>
+          <li><strong>Engage by:</strong> Show ease of deployment, protocol support, VPN tunnel setup, remote PLC programming — he values reduced complexity</li>
+          <li><strong>Note:</strong> High Point, NC — near several IXON customers. Strategic next step: hand-deliver eval hardware in person</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-card" style="margin-top: 14px;">
+      <h3>Patrick McDermott — CEO, CAS Holdings (NOT on call — follow-up target)</h3>
+      <ul>
+        <li><strong>18 years at B&R Industrial Automation (ABB)</strong> → President of the Americas → CEO of CAS Holdings Jan 2025</li>
+        <li>Deep technical: digital control systems, OPC UA TSN, adaptive machines, IIoT</li>
+        <li>Moderated "Turning AI Experiments into Measurable Success" at 2025 PMMI Exec Leadership Conference</li>
+        <li>Understands vendor-locked remote access limitations — position IXON's vendor-agnostic cloud as strategic advantage</li>
+        <li><strong>The real decision-maker.</strong> Everything in this call should produce ammunition for Kathy to bring back to Pat.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DISCOVERY QUESTIONS — THE CORE -->
+  <div class="section" id="discovery">
+    <div class="section-header">
+      <div class="dot" style="background:var(--ixon-yellow)"></div>
+      <h2>Discovery Questions — Let Them Talk</h2>
+    </div>
+    <p style="font-size: 13px; color: var(--ixon-grey); margin-bottom: 14px; font-style: italic;">
+      Goal: 70% customer talking. Open with gratitude for the thorough evaluation, then get them sharing. Each question is tagged to the person most likely to answer. Follow the thread — don't interrogate.
+    </p>
+
+    <!-- OPENING -->
+    <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; color: var(--ixon-blue); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; margin-top: 16px;">Opening — Set the Frame (2 min)</div>
+    <div class="q-grid">
+      <div class="q-card both">
+        <div class="q-label both">Both</div>
+        <div class="q-text">"Kathy, thanks for pulling this together — I know it's been a few weeks in the making. Before we jump in, I'd love to hear from you and Jim: what prompted the evaluation in the first place? What problem were you trying to solve?"</div>
+        <div class="q-why">Opens the floor. Gets CBI (Critical Business Issue) in their words. Don't assume — let them frame it.</div>
+      </div>
+    </div>
+
+    <!-- CURRENT STATE -->
+    <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; color: var(--ixon-blue); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; margin-top: 20px;">Current State — Understand Their World (15 min)</div>
+    <div class="q-grid">
+      <div class="q-card jim">
+        <div class="q-label jim">Jim</div>
+        <div class="q-text">"Jim, can you walk us through what you're using today for remote access to machines — both for your own engineering work and what you offer customers?"</div>
+        <div class="q-why">Confirms the incumbent. Listen for pain signals: "it works but..." is your entry point.</div>
+      </div>
+      <div class="q-card kathy">
+        <div class="q-label kathy">Kathy</div>
+        <div class="q-text">"Kathy, when your customers ask about remote access or IoT capability — how does that conversation go today? Is it something your sales team has a good answer for?"</div>
+        <div class="q-why">Surfaces the distribution gap. If her team can't confidently sell remote access today, IXON fills that hole.</div>
+      </div>
+      <div class="q-card jim">
+        <div class="q-label jim">Jim</div>
+        <div class="q-text">"When you did the comparison, what were the biggest differences you noticed? Where did IXON stand out vs. where you had questions?"</div>
+        <div class="q-why">Critical — this is the findings debrief. Take notes verbatim. Their "questions" reveal buying criteria. Their "standouts" confirm value props to reinforce.</div>
+      </div>
+      <div class="q-card kathy">
+        <div class="q-label kathy">Kathy</div>
+        <div class="q-text">"Are you evaluating IXON as something to offer through your distribution channel, something for RND's own machines, or potentially both?"</div>
+        <div class="q-why">Clarifies the deal structure immediately. Shapes everything downstream. The answer determines if this is a 1pt WNC or a strategic partnership.</div>
+      </div>
+      <div class="q-card jim">
+        <div class="q-label jim">Jim</div>
+        <div class="q-text">"What PLC platforms are most common across your customer base? I imagine B&R is a big one — what else do you see regularly?"</div>
+        <div class="q-why">Maps IXON's multi-vendor advantage. If they serve customers on Rockwell, Siemens, Omron, AND B&R — the vendor-agnostic story is massive.</div>
+      </div>
+    </div>
+
+    <!-- PAIN / DELTA -->
+    <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; color: var(--ixon-blue); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; margin-top: 20px;">Pain & Delta — Quantify the Gap (10 min)</div>
+    <div class="q-grid">
+      <div class="q-card jim">
+        <div class="q-label jim">Jim</div>
+        <div class="q-text">"When you need to troubleshoot a customer's machine remotely today — what does that process actually look like? How long does it take to get connected?"</div>
+        <div class="q-why">Surfaces the operational pain. Time-to-connect is the delta you can quantify.</div>
+      </div>
+      <div class="q-card kathy">
+        <div class="q-label kathy">Kathy</div>
+        <div class="q-text">"How many of your OEM customers are asking for remote connectivity on the machines you sell? Is that increasing?"</div>
+        <div class="q-why">Quantifies market demand from their customer base. If 3 out of 10 are asking, it's a trend. If 8 out of 10, it's a burning platform.</div>
+      </div>
+      <div class="q-card jim">
+        <div class="q-label jim">Jim</div>
+        <div class="q-text">"Are there situations where your current solution doesn't cover a customer because it's locked to a specific PLC vendor?"</div>
+        <div class="q-why">Directly surfaces the vendor-lock limitation if the incumbent is B&R SRA. This is IXON's biggest differentiator.</div>
+      </div>
+      <div class="q-card kathy">
+        <div class="q-label kathy">Kathy</div>
+        <div class="q-text">"If you had a remote access platform that worked across all the brands you carry — what would that mean for your sales conversations?"</div>
+        <div class="q-why">Gets Kathy to articulate the future-state value in her own words. This becomes the language for Pat's follow-up.</div>
+      </div>
+    </div>
+
+    <!-- BUYING PROCESS -->
+    <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; color: var(--ixon-blue); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; margin-top: 20px;">Next Steps & Buying Process (5 min)</div>
+    <div class="q-grid">
+      <div class="q-card kathy">
+        <div class="q-label kathy">Kathy</div>
+        <div class="q-text">"If this looks like a fit today — what would the path look like to add something like IXON to your product portfolio? What does iAutomation's evaluation process look like?"</div>
+        <div class="q-why">Qualifies the buying process. You need to know: is this Kathy's call, Pat's call, or a formal vendor onboarding process?</div>
+      </div>
+      <div class="q-card both">
+        <div class="q-label both">Both</div>
+        <div class="q-text">"Would it be valuable for us to get Jim hands-on with actual hardware? I'd be happy to bring evaluation units to High Point — I'm in the area regularly."</div>
+        <div class="q-why">Plants the in-person visit seed. Jim is in High Point, NC. Hand-delivering SecureEdge Pro + IXrouter3 creates a relationship touchpoint and accelerates the technical validation.</div>
+      </div>
+      <div class="q-card kathy">
+        <div class="q-label kathy">Kathy</div>
+        <div class="q-text">"Pat mentioned wanting to be part of this conversation — should we schedule a follow-up that works for his calendar once we've covered the technical ground today?"</div>
+        <div class="q-why">Gets the CEO meeting on the books before you hang up. Don't leave this to email.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTIONS THEY'LL ASK US -->
+  <div class="section" id="their-qs">
+    <div class="section-header">
+      <div class="dot" style="background:var(--red)"></div>
+      <h2>Questions They'll Ask Us — Be Ready</h2>
+    </div>
+    <p style="font-size: 13px; color: var(--ixon-grey); margin-bottom: 14px; font-style: italic;">
+      They did a formal comparison. Expect pointed, specific questions. Tagged by who's most likely to ask.
+    </p>
+
+    <table class="their-q">
+      <thead>
+        <tr>
+          <th style="width: 35%;">Their Question</th>
+          <th style="width: 10%;">From</th>
+          <th style="width: 55%;">Your Answer Framework</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="likely">"What PLCs and protocols do you support? Does it work with B&R?"</td>
+          <td><span class="source-tag tag-jim">Jim</span></td>
+          <td class="answer">Yes — IXON supports any PLC reachable via Ethernet (Modbus TCP, EtherNet/IP, OPC-UA, Profinet, proprietary). B&R specifically works via VPN tunnel for Automation Studio remote programming. Unlike B&R SRA, IXON is vendor-agnostic — same gateway for B&R, Rockwell, Siemens, Omron, Beckhoff, CODESYS-based controllers.</td>
+        </tr>
+        <tr>
+          <td class="likely">"How does the security architecture work? What about IT compliance?"</td>
+          <td><span class="source-tag tag-jim">Jim</span></td>
+          <td class="answer">Outbound-only connections on port 443 (HTTPS) — no inbound firewall rules, no port forwarding, no public IPs. TLS 1.2+ encrypted tunnels. Separate VPN per machine (micro-segmentation). Vendor access governed by approval workflows — IT keeps control. SOC 2 Type II, ISO 27001 certified. We have a full IT Security Guide we can white-label for iAutomation customers.</td>
+        </tr>
+        <tr>
+          <td class="likely">"What's the commercial model? How do we make money on this?"</td>
+          <td><span class="source-tag tag-kathy">Kathy</span></td>
+          <td class="answer">Hardware margin on IXrouter3 / SecureEdge / SecureEdge Pro gateway sales + recurring SaaS revenue from IXON Cloud subscriptions (Remote Access Plus at $375/mo flat covers all devices, all facilities). Distributor pricing available with volume tiers. The SaaS subscription creates a recurring revenue stream your team doesn't have today.</td>
+        </tr>
+        <tr>
+          <td class="likely">"How does this differ from what we're using today?"</td>
+          <td><span class="source-tag tag-both">Both</span></td>
+          <td class="answer">Flip this: "Can you tell us what you're using? We want to speak specifically to the differences." Then respond to their actual incumbent. If B&R SRA: IXON is multi-vendor (not just B&R), cloud-native (not on-prem VPN), includes fleet management + dashboards, and has a dedicated SaaS platform with user/vendor governance. Works on machines where B&R isn't the PLC.</td>
+        </tr>
+        <tr>
+          <td class="likely">"How hard is it to deploy? What does the install look like?"</td>
+          <td><span class="source-tag tag-jim">Jim</span></td>
+          <td class="answer">Mount the IXrouter, connect Ethernet to the machine network, power it on — it registers to IXON Cloud automatically. Configure users and access rights from the cloud portal. No on-prem server, no VPN concentrator, no IT infrastructure project. Jim can have a unit running in under 15 minutes. This is a great place to offer to show him live.</td>
+        </tr>
+        <tr>
+          <td class="likely">"Can we white-label or co-brand this for our customers?"</td>
+          <td><span class="source-tag tag-kathy">Kathy</span></td>
+          <td class="answer">Yes — IXON supports OEM white-labeling of the cloud portal and customer-facing security documentation. We already produce white-labeled IT Security Guides and customer-facing materials for our OEM partners. iAutomation's brand stays front and center.</td>
+        </tr>
+        <tr>
+          <td class="likely">"What about data logging, dashboards, IIoT beyond just remote access?"</td>
+          <td><span class="source-tag tag-jim">Jim</span></td>
+          <td class="answer">IXON Cloud includes data logging, custom dashboards, alarming, and fleet monitoring — all SaaS modules that layer on top of the base remote access. This is the expansion path: start with remote access (the immediate pain), grow into data visibility and predictive insights. Matches Pat's IIoT vision for CAS Holdings.</td>
+        </tr>
+        <tr>
+          <td class="likely">"How does pricing work at volume? We distribute to hundreds of customers."</td>
+          <td><span class="source-tag tag-kathy">Kathy</span></td>
+          <td class="answer">Volume discount tiers on hardware (5%–10% depending on annual unit volume). Remote Access Plus SaaS is $375/mo flat — no per-device fees, no per-facility fees. At scale, iAutomation's per-customer cost drops significantly while the subscription revenue to you stays consistent. We structure partnership pricing — happy to work through the numbers together.</td>
+        </tr>
+        <tr>
+          <td class="likely">"Does it work with CODESYS-based controllers?"</td>
+          <td><span class="source-tag tag-jim">Jim</span></td>
+          <td class="answer">Yes — the VPN tunnel provides direct Layer 3 access to any device on the machine network. CODESYS programming tools connect through the tunnel exactly as they would on-site. Jim can program, debug, and monitor CODESYS controllers remotely as if he were plugged into the machine.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ICP FIT -->
+  <div class="section" id="icp">
+    <div class="section-header">
+      <div class="dot" style="background:var(--ixon-blue)"></div>
+      <h2>ICP Fit Assessment — Why This Matters</h2>
+    </div>
+    <div class="deal-grid">
+      <div class="info-card green">
+        <h3>Strong Fit Signals</h3>
+        <ul>
+          <li>Value-added distributor with engineering capability — can sell AND deploy IXON</li>
+          <li>50+ brand partners but <strong>no remote access product</strong> — clear portfolio gap</li>
+          <li>Sister OEM division (RND) builds packaging machines that need remote access</li>
+          <li>PE-backed with revenue growth mandate — recurring SaaS revenue story resonates</li>
+          <li>East Coast coverage (Maine to Florida) with field sales team and application engineers</li>
+          <li>Customer base spans multiple PLC brands — vendor-agnostic platform is a differentiator</li>
+          <li>Jim Mullins in High Point, NC — geographic proximity for hands-on partnership</li>
+          <li>Recently added Festo to portfolio (2025) — actively expanding product line</li>
+        </ul>
+      </div>
+      <div class="info-card red">
+        <h3>Risks to Watch</h3>
+        <ul>
+          <li><strong>B&R/ABB channel conflict:</strong> ABB is a primary brand partner. Adding a competing remote access platform could create tension. Position IXON as complementary — it covers the machines B&R SRA can't reach.</li>
+          <li><strong>Price shopping risk:</strong> They may use IXON as leverage to negotiate with their incumbent. Counter: VP Sales leading + engineering resources invested = genuine interest beyond price.</li>
+          <li><strong>Pat not on the call:</strong> The CEO/decision-maker isn't here. We need Kathy to champion this internally — build ammunition she can carry to Pat.</li>
+          <li><strong>Long buying cycle:</strong> Distributor onboarding can take months. Manage expectations on timeline — but push for a technical eval as the immediate next step.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALL STRATEGY -->
+  <div class="section" id="strategy">
+    <div class="section-header">
+      <div class="dot" style="background:var(--ixon-dark)"></div>
+      <h2>Call Execution Strategy</h2>
+    </div>
+    <div class="strategy-grid">
+      <div class="strategy-box do">
+        <h4>Do</h4>
+        <ul>
+          <li>Let them lead with their comparison findings — they did the work, respect it</li>
+          <li>Ask open questions, then shut up — 70% their voice</li>
+          <li>Reference the IIoT gap in their product portfolio naturally</li>
+          <li>Offer to get Jim hands-on hardware in High Point</li>
+          <li>Get a follow-up with Pat McDermott committed before the call ends</li>
+          <li>Invite Max for the back half if the conversation goes technical</li>
+        </ul>
+      </div>
+      <div class="strategy-box avoid">
+        <h4>Avoid</h4>
+        <ul>
+          <li>Don't demo-dump — this is discovery, not a pitch</li>
+          <li>Don't trash B&R/ABB — Pat built his career there</li>
+          <li>Don't pitch channel partnership pricing before understanding the opportunity</li>
+          <li>Don't assume they want distribution — they might just want it for RND</li>
+          <li>Don't over-commit on white-labeling details before talking to Stefan</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout-bar">
+      <div class="tag">Remember</div>
+      <div class="text">This is DISCOVERY. The best outcome is: they feel heard, we understand the opportunity, Jim wants to get hands-on, and we have Pat's meeting on the calendar. If they want to see something — show the cloud portal briefly. Don't force it.</div>
+    </div>
+  </div>
+
+  <!-- SUGGESTED NEXT STEPS -->
+  <div class="section" id="nextsteps">
+    <div class="section-header">
+      <div class="dot" style="background:var(--green)"></div>
+      <h2>Proposed Next Steps — Plant These Seeds</h2>
+    </div>
+    <div class="q-grid">
+      <div class="q-card green">
+        <div class="q-label" style="color: var(--green);">Immediate</div>
+        <div class="q-text">Schedule follow-up with Patrick McDermott — strategic alignment call</div>
+        <div class="q-why">Get this committed on the call. "Kathy, I know Pat wanted to be part of this — can we get 30 minutes on his calendar next week?"</div>
+      </div>
+      <div class="q-card orange">
+        <div class="q-label" style="color: var(--orange);">This Month</div>
+        <div class="q-text">Hand-deliver eval hardware to Jim Mullins in High Point, NC</div>
+        <div class="q-why">IXrouter3 + SecureEdge Pro. In-person relationship building. Jim can connect to a real PLC and validate the comparison himself.</div>
+      </div>
+      <div class="q-card both">
+        <div class="q-label both">Near Term</div>
+        <div class="q-text">Technical deep-dive with Max Lauer — IXON + B&R integration demo</div>
+        <div class="q-why">Show Jim exactly how IXON tunnels work with B&R Automation Studio. Max runs the technical proof.</div>
+      </div>
+      <div class="q-card">
+        <div class="q-label" style="color: var(--ixon-blue);">Strategic</div>
+        <div class="q-text">Propose pilot: IXON on 3–5 RND packaging machines as proof of concept</div>
+        <div class="q-why">Dual value — validates the product for RND's own fleet AND gives iAutomation a reference deployment to sell from.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAX CATCH-UP -->
+  <div class="section" id="max">
+    <div class="section-header">
+      <div class="dot" style="background:var(--ixon-blue)"></div>
+      <h2>Max Lauer — Catch-Up Brief for Back Half</h2>
+    </div>
+    <div style="background: var(--ixon-offwhite); border-radius: 10px; padding: 24px 28px; border: 2px solid var(--ixon-blue);">
+      <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; color: var(--ixon-dark); margin-bottom: 14px;">
+        SE Prep — iAutomation Discovery Call (April 16, 9 AM EST)
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px;">
+        <div>
+          <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ixon-blue); margin-bottom: 8px;">What You Need to Know</div>
+          <ul style="font-size: 13px; color: var(--ixon-grey); line-height: 1.7; padding-left: 16px;">
+            <li><strong>iAutomation</strong> = CAS Holdings division — VA-distributor + SI covering East Coast, 50+ brand partners, ~160 people</li>
+            <li><strong>RND Automation</strong> = sister OEM division — builds packaging machines (HFFS, VFFS, palletizing)</li>
+            <li>Their app engineer <strong>Jim Mullins</strong> already compared IXON to their current solution (likely <strong>B&R SRA</strong>)</li>
+            <li><strong>Kathy Cesca</strong> (VP Sales) is leading — she's evaluating IXON as a product to add to their distribution lineup</li>
+            <li>CEO <strong>Pat McDermott</strong> (ex-B&R President, 18 years) not on this call but initiated the relationship at PMMI</li>
+            <li>This is <strong>DISCOVERY first</strong> — but if they ask for a technical look, be ready to show the cloud portal + VPN setup</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ixon-blue); margin-bottom: 8px;">If You Get Tagged In</div>
+          <ul style="font-size: 13px; color: var(--ixon-grey); line-height: 1.7; padding-left: 16px;">
+            <li>Jim will ask about <strong>B&R Automation Studio remote programming</strong> through IXON VPN — be ready to confirm/demo</li>
+            <li>Expect <strong>CODESYS + OPC-UA</strong> protocol questions — Jim lives in this world</li>
+            <li>Show <strong>multi-vendor support</strong> — their customers use Rockwell, Siemens, B&R, Omron, etc.</li>
+            <li>If demo is requested: show <strong>device setup → cloud portal → VPN connection → access governance</strong> flow</li>
+            <li>Emphasize <strong>no inbound firewall rules</strong> — outbound 443 only — this is the IT sell</li>
+            <li><strong>Don't trash B&R SRA</strong> — Pat McDermott built his career at B&R. Frame as "complementary for multi-vendor environments"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout-bar" style="margin-top: 0;">
+        <div class="tag">Key Message</div>
+        <div class="text">IXON fills iAutomation's IIoT product gap with a vendor-agnostic, cloud-native remote access platform that works across every PLC brand their customers use — not just B&R. Recurring SaaS revenue model for their sales team. Start with remote access, expand into data + dashboards.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT SHEET -->
+  <div class="section" id="contacts">
+    <div class="section-header">
+      <div class="dot" style="background:var(--ixon-dark)"></div>
+      <h2>Quick-Reference Contact Sheet</h2>
+    </div>
+    <table class="contact-table">
+      <thead>
+        <tr>
+          <th>Person</th>
+          <th>Role</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>On Call?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Kathy Cesca</strong></td>
+          <td>VP Sales, iAutomation</td>
+          <td>845.517.7768</td>
+          <td>kcesca@i-automation.com</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Jim Mullins</strong></td>
+          <td>Applications Engineering</td>
+          <td>—</td>
+          <td>jmullins@i-automation.com</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Patrick McDermott</strong></td>
+          <td>CEO, CAS Holdings</td>
+          <td>508.386.9786</td>
+          <td>PMcDermott@i-automation.com</td>
+          <td>❌</td>
+        </tr>
+        <tr>
+          <td><strong>Brandon Penrod</strong></td>
+          <td>Sales Dir NA, IXON</td>
+          <td>—</td>
+          <td>brandon.penrod@ixon.cloud</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Phil Belue</strong></td>
+          <td>Enterprise AE, IXON</td>
+          <td>704.773.6226</td>
+          <td>phil.belue@ixon.cloud</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <td><strong>Max Lauer</strong></td>
+          <td>Solutions Engineer, IXON</td>
+          <td>—</td>
+          <td>—</td>
+          <td>Back half</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top: 10px; font-size: 12px; color: var(--ixon-grey);">
+      <strong>Meeting link:</strong> <a href="https://meet.google.com/eaj-epno-htm" style="color: var(--ixon-blue);">https://meet.google.com/eaj-epno-htm</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>IXON Cloud North America · Internal Use Only</div>
+    <div>Generated April 16, 2026</div>
+  </div>
+
+</div>
+</div><!-- /layout -->
+<script>
+// Scroll-spy: highlight active sidebar link
+const links = document.querySelectorAll('.sidebar a');
+const sections = [];
+links.forEach(a => {
+  const id = a.getAttribute('href').slice(1);
+  const el = document.getElementById(id);
+  if (el) sections.push({ id, el, a });
+});
+function onScroll() {
+  let current = sections[0];
+  for (const s of sections) {
+    if (s.el.getBoundingClientRect().top <= 120) current = s;
+  }
+  links.forEach(a => a.classList.remove('active'));
+  if (current) current.a.classList.add('active');
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+// Smooth scroll
+links.forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
