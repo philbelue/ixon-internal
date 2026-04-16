@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IXON — The Connection Layer</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#1059D2; --dark:#021752; --off:#F3F4FA;
+  --yellow:#FACD00; --grey:#626262; --teal:#2AAE8A;
+  --border:#e2e8f0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Roboto',sans-serif;background:var(--off);color:var(--dark);font-size:14px;line-height:1.65}
+h1,h2,h3,h4{font-family:'Poppins',sans-serif}
+
+/* HEADER */
+.hdr{background:var(--dark);padding:0 40px;height:60px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--blue)}
+.hdr-brand{font-family:'Poppins',sans-serif;font-weight:700;font-size:18px;color:#fff;letter-spacing:1px}
+.hdr-tag{background:var(--blue);color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:10px;padding:5px 12px;border-radius:4px;letter-spacing:1.5px;text-transform:uppercase}
+
+/* HERO */
+.hero{background:linear-gradient(130deg,var(--dark) 0%,#0e1d4a 50%,var(--blue) 100%);padding:52px 40px 48px;color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:380px;height:380px;background:radial-gradient(circle,rgba(16,89,210,0.18) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-family:'Poppins',sans-serif;font-weight:500;font-size:10px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';display:inline-block;width:24px;height:2px;background:var(--teal)}
+.hero h1{font-family:'Poppins',sans-serif;font-weight:800;font-size:34px;line-height:1.15;margin-bottom:14px;max-width:700px;letter-spacing:-0.5px}
+.hero h1 em{font-style:normal;color:var(--teal)}
+.hero h1 strong{color:var(--yellow)}
+.hero-sub{font-family:'Poppins',sans-serif;font-weight:300;font-size:15px;color:rgba(255,255,255,0.68);max-width:580px;line-height:1.8;margin-bottom:32px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{border:1px solid rgba(255,255,255,0.16);border-radius:20px;padding:5px 14px;font-size:11.5px;font-family:'Poppins',sans-serif;font-weight:500;color:rgba(255,255,255,0.8);display:flex;align-items:center;gap:6px}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-teal{background:var(--teal)} .dot-blue{background:#6fa3ff} .dot-yellow{background:var(--yellow)}
+
+/* SECTION */
+.sec{padding:48px 40px}
+.sec-white{background:#fff}
+.sec-off{background:var(--off)}
+.sec-dark{background:var(--dark);color:#fff}
+.label{font-family:'Poppins',sans-serif;font-weight:600;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.sec-dark .label{color:var(--teal)}
+.sec-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:24px;color:var(--dark);margin-bottom:10px}
+.sec-dark .sec-title{color:#fff}
+.sec-desc{font-size:13.5px;color:var(--grey);max-width:680px;margin-bottom:32px;line-height:1.8}
+.sec-dark .sec-desc{color:rgba(255,255,255,0.55)}
+
+/* PROBLEM STRIP */
+.prob-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.prob-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.prob-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue)}
+.prob-num{font-family:'Poppins',sans-serif;font-weight:800;font-size:36px;line-height:1;color:var(--dark);opacity:.07;margin-bottom:6px}
+.prob-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:13.5px;color:var(--dark);margin-bottom:6px}
+.prob-body{font-size:12.5px;color:var(--grey);line-height:1.7}
+
+/* CONNECTION LAYER DIAGRAM */
+.layer-wrap{display:flex;flex-direction:column;gap:0;max-width:780px;margin:0 auto}
+.layer{border-radius:10px;padding:20px 24px;position:relative}
+.layer-cloud{background:linear-gradient(135deg,var(--dark) 0%,#0e1d4a 100%);color:#fff;border:1px solid rgba(255,255,255,0.08)}
+.layer-edge{background:#fff;border:2px solid var(--blue);color:var(--dark)}
+.layer-machine{background:linear-gradient(135deg,#f8faff 0%,var(--off) 100%);border:1px solid var(--border);color:var(--dark)}
+.layer-head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.layer-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.icon-cloud{background:rgba(16,89,210,0.15)}
+.icon-edge{background:rgba(16,89,210,0.08)}
+.icon-machine{background:rgba(42,174,138,0.12)}
+.layer-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:15px}
+.layer-cloud .layer-name{color:#fff}
+.layer-sub{font-size:11px;opacity:0.65;margin-top:1px}
+.layer-body{font-size:12.5px;line-height:1.75;color:rgba(255,255,255,0.65)}
+.layer-edge .layer-body,.layer-machine .layer-body{color:var(--grey)}
+.layer-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tag{font-size:10.5px;font-family:'Poppins',sans-serif;font-weight:600;padding:3px 9px;border-radius:4px;text-transform:uppercase;letter-spacing:.3px}
+.tag-blue{background:rgba(16,89,210,0.12);color:var(--blue)}
+.tag-teal{background:rgba(42,174,138,0.12);color:#1a8a6b}
+.tag-yellow{background:rgba(250,205,0,0.15);color:#7a5f00}
+.tag-white{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8)}
+.connector{display:flex;align-items:center;justify-content:center;height:32px;position:relative}
+.connector::before{content:'';position:absolute;left:50%;width:2px;height:100%;background:var(--blue);opacity:0.25;transform:translateX(-50%)}
+.conn-badge{background:var(--blue);color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:10px;padding:3px 10px;border-radius:12px;letter-spacing:.5px;z-index:1;position:relative}
+
+/* THREE CLOUDS */
+.clouds{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:24px}
+.cloud-card{border-radius:10px;padding:20px;border:1px solid var(--border)}
+.cloud-card.c1{background:#EEF4FF;border-color:#c7d9f9}
+.cloud-card.c2{background:#E9F7F3;border-color:#a8dece}
+.cloud-card.c3{background:#FFFBEA;border-color:#ede09a}
+.cloud-icon{font-size:24px;margin-bottom:10px}
+.cloud-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:13.5px;color:var(--dark);margin-bottom:6px}
+.cloud-body{font-size:12px;color:var(--grey);line-height:1.7}
+
+/* OUTCOME ROW */
+.outcomes{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.outcome{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px}
+.outcome-num{font-family:'Poppins',sans-serif;font-weight:800;font-size:28px;color:var(--yellow);margin-bottom:4px}
+.outcome-label{font-size:12px;color:rgba(255,255,255,0.65);line-height:1.5}
+
+/* CTA */
+.cta-bar{background:var(--blue);padding:36px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.cta-text h3{font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;color:#fff;margin-bottom:4px}
+.cta-text p{font-size:13px;color:rgba(255,255,255,0.72)}
+.cta-btn{background:var(--yellow);color:var(--dark);font-family:'Poppins',sans-serif;font-weight:700;font-size:13px;padding:12px 28px;border-radius:6px;text-decoration:none;letter-spacing:.5px;display:inline-block}
+
+/* FOOTER */
+.footer{background:var(--dark);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer p{font-size:11px;color:rgba(255,255,255,0.35)}
+
+@media(max-width:600px){
+  .hero{padding:32px 20px 28px}
+  .sec{padding:32px 20px}
+  .hdr{padding:0 20px}
+  .cta-bar{padding:28px 20px}
+  .footer{padding:16px 20px}
+  .hero h1{font-size:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-brand">IXON</div>
+  <div class="hdr-tag">Connection Layer Overview</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Industrial IoT · Remote Access · Machine Intelligence</div>
+  <h1>Your machines are <em>connected.</em><br>Your service is <strong>transformed.</strong></h1>
+  <p class="hero-sub">One platform that lives between your machine and your cloud — so your engineers fix problems remotely, your customers get uptime, and your service becomes a revenue engine.</p>
+  <div class="pills">
+    <div class="pill"><div class="dot dot-teal"></div>Zero IT overhead</div>
+    <div class="pill"><div class="dot dot-blue"></div>No VPN negotiation</div>
+    <div class="pill"><div class="dot dot-yellow"></div>OEM-owned data</div>
+    <div class="pill"><div class="dot dot-teal"></div>Works behind any firewall</div>
+  </div>
+</div>
+
+<!-- THE PROBLEM -->
+<div class="sec sec-white">
+  <div class="label">The problem you're solving</div>
+  <div class="sec-title">Every machine you ship creates a service liability</div>
+  <p class="sec-desc">The old model — truck rolls, customer VPN negotiations, TeamViewer one-offs — doesn't scale. Every new machine in the field is another support burden if you don't own the connection layer.</p>
+  <div class="prob-grid">
+    <div class="prob-card">
+      <div class="prob-num">01</div>
+      <div class="prob-title">Truck rolls are expensive</div>
+      <div class="prob-body">A field dispatch averages $1,500–2,500 fully loaded. Most can be resolved remotely in under 20 minutes — if you have secure access.</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-num">02</div>
+      <div class="prob-title">Customer VPNs are a nightmare</div>
+      <div class="prob-body">IT tickets. Firewall exceptions. 48-hour wait times. Your engineer is ready — the customer's network team isn't.</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-num">03</div>
+      <div class="prob-title">No visibility = no data</div>
+      <div class="prob-body">You can't sell proactive service contracts without machine telemetry. And you can't prove your uptime story without data to back it.</div>
+    </div>
+    <div class="prob-card">
+      <div class="prob-num">04</div>
+      <div class="prob-title">One-off tools don't scale</div>
+      <div class="prob-body">TeamViewer, ad-hoc VPNs, manual logins — every site is different. Service engineers lose 30% of their time to access problems, not actual fixes.</div>
+    </div>
+  </div>
+</div>
+
+<!-- THE LAYER -->
+<div class="sec sec-off">
+  <div class="label">How IXON works</div>
+  <div class="sec-title">Three-layer architecture — built for OEMs</div>
+  <p class="sec-desc">IXON sits between your machine and the cloud. The IXrouter3 hardware rides on every machine you ship. Everything else is software — configurable, brandable, yours.</p>
+
+  <div class="layer-wrap">
+    <!-- Cloud -->
+    <div class="layer layer-cloud">
+      <div class="layer-head">
+        <div class="layer-icon icon-cloud">☁️</div>
+        <div>
+          <div class="layer-name">IXON Cloud Platform</div>
+          <div class="layer-sub">Hosted by IXON · Zero infrastructure to manage</div>
+        </div>
+      </div>
+      <div class="layer-body">Your engineers and your customers access everything here — remote sessions, machine dashboards, service history, alarm logs. Three cloud products, one login.</div>
+      <div class="layer-tags">
+        <span class="tag tag-white">Remote Access Cloud</span>
+        <span class="tag tag-white">Machine Insights Cloud</span>
+        <span class="tag tag-white">Service Portal Cloud</span>
+      </div>
+    </div>
+
+    <div class="connector"><span class="conn-badge">Encrypted tunnel · TLS 1.3 · No open inbound ports</span></div>
+
+    <!-- Edge -->
+    <div class="layer layer-edge">
+      <div class="layer-head">
+        <div class="layer-icon icon-edge">📦</div>
+        <div>
+          <div class="layer-name">IXrouter3 (Edge Gateway)</div>
+          <div class="layer-sub">Ships with every machine · DIN-rail mounted · 4G/LTE + Ethernet</div>
+        </div>
+      </div>
+      <div class="layer-body">The hardware that lives on your machine. Handles secure tunnel initiation, local data processing, and connection management — without requiring any changes to your customer's network.</div>
+      <div class="layer-tags">
+        <span class="tag tag-blue">Outbound-only connection</span>
+        <span class="tag tag-blue">Edge compute capable</span>
+        <span class="tag tag-blue">Auto-reconnect</span>
+        <span class="tag tag-teal">No IT involvement needed</span>
+      </div>
+    </div>
+
+    <div class="connector"><span class="conn-badge">Local network · Modbus / OPC-UA / Ethernet IP</span></div>
+
+    <!-- Machine -->
+    <div class="layer layer-machine">
+      <div class="layer-head">
+        <div class="layer-icon icon-machine">⚙️</div>
+        <div>
+          <div class="layer-name">Your Machine</div>
+          <div class="layer-sub">PLC · HMI · Sensors · Any OEM equipment</div>
+        </div>
+      </div>
+      <div class="layer-body">Works with any industrial protocol. Siemens, Rockwell, Beckhoff, B&R, Omron — if it talks industrial Ethernet or serial, IXON reads it.</div>
+      <div class="layer-tags">
+        <span class="tag tag-teal">Siemens S7</span>
+        <span class="tag tag-teal">Rockwell / AB</span>
+        <span class="tag tag-teal">Beckhoff / B&R</span>
+        <span class="tag tag-teal">Modbus TCP/RTU</span>
+        <span class="tag tag-teal">OPC-UA</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THREE CLOUDS -->
+<div class="sec sec-white">
+  <div class="label">Platform breakdown</div>
+  <div class="sec-title">One platform. Three products.</div>
+  <p class="sec-desc">Start with remote access. Grow into insights and customer portals as your service motion matures. Add capabilities without ripping anything out.</p>
+  <div class="clouds">
+    <div class="cloud-card c1">
+      <div class="cloud-icon">🔐</div>
+      <div class="cloud-title">Remote Access Cloud</div>
+      <div class="cloud-body">Secure, audited, one-click access to any machine your team has deployed. No VPN. No IT ticket. Works from anywhere on any device.</div>
+    </div>
+    <div class="cloud-card c2">
+      <div class="cloud-icon">📊</div>
+      <div class="cloud-title">Machine Insights Cloud</div>
+      <div class="cloud-body">Real-time and historical machine data. Build dashboards, set alarms, identify failure patterns before they become downtime.</div>
+    </div>
+    <div class="cloud-card c3">
+      <div class="cloud-icon">🏢</div>
+      <div class="cloud-title">Service Portal Cloud</div>
+      <div class="cloud-body">Your brand, your customers. Give end-users visibility into their own machines while you stay in control of access and data.</div>
+    </div>
+  </div>
+</div>
+
+<!-- OUTCOMES -->
+<div class="sec sec-dark">
+  <div class="label">Why it matters</div>
+  <div class="sec-title">The numbers OEMs see</div>
+  <p class="sec-desc">These aren't projections. They're what IXON customers report after standardizing on the platform.</p>
+  <div class="outcomes">
+    <div class="outcome">
+      <div class="outcome-num">60%</div>
+      <div class="outcome-label">Reduction in truck rolls within 12 months of deployment</div>
+    </div>
+    <div class="outcome">
+      <div class="outcome-num">&lt;5 min</div>
+      <div class="outcome-label">Average time to first remote session on a new machine</div>
+    </div>
+    <div class="outcome">
+      <div class="outcome-num">3×</div>
+      <div class="outcome-label">Service contract attach rate increase after portal launch</div>
+    </div>
+    <div class="outcome">
+      <div class="outcome-num">0</div>
+      <div class="outcome-label">Open inbound ports required on customer network</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-bar">
+  <div class="cta-text">
+    <h3>Ready to put the connection layer on your next machine?</h3>
+    <p>Phil Belue · IXON North America · phil.belue@ixon.cloud</p>
+  </div>
+  <a href="https://www.ixon.cloud" class="cta-btn" target="_blank">Learn more at ixon.cloud →</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>IXON Cloud · IXrouter3 · Industrial IoT Platform · © 2026 IXON B.V.</p>
+  <p>Confidential — for customer use only</p>
+</div>
+
+</body>
+</html>
