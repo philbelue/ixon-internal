@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MiTek Call Control Brief v2.1 — Phil Belue | IXON Cloud NA</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ixon-blue: #1059D2;
+    --ixon-dark: #021752;
+    --ixon-offwhite: #F3F4FA;
+    --ixon-yellow: #FACD00;
+    --ixon-grey: #626262;
+    --ixon-light-grey: #E8E9F0;
+    --ixon-border: #D9DCE6;
+    --green: #1B9E5A;
+    --green-bg: #E6F7EE;
+    --orange: #E8850C;
+    --orange-bg: #FFF1DD;
+    --red: #D93025;
+    --red-bg: #FCE8E6;
+    --info-bg: #E5EEFB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: #fff;
+    color: var(--ixon-dark);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+  }
+
+  /* ── LAYOUT ── */
+  .app {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR NAV ── */
+  .sidebar {
+    background: var(--ixon-blue);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 0 28px 0;
+    border-right: 4px solid var(--ixon-yellow);
+  }
+  .sidebar::-webkit-scrollbar { width: 6px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 3px; }
+
+  .brand {
+    padding: 0 24px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+    margin-bottom: 18px;
+  }
+  .brand-eyebrow {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .brand-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .brand-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.5;
+  }
+
+  .nav-group {
+    margin-bottom: 18px;
+  }
+  .nav-group-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #fff;
+    font-weight: 700;
+    padding: 0 24px 8px;
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 400;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .nav-link:hover {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+  }
+  .nav-link.active {
+    background: rgba(2, 23, 82, 0.35);
+    color: #fff;
+    border-left-color: var(--ixon-yellow);
+    font-weight: 500;
+  }
+  .nav-num {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    min-width: 20px;
+  }
+  .nav-link.active .nav-num { color: var(--ixon-yellow); }
+
+  .sidebar-footer {
+    padding: 20px 24px;
+    margin-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.18);
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    padding: 0;
+    background: #fff;
+    min-width: 0;
+  }
+  .topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--ixon-light-grey);
+    padding: 18px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .topbar-left h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--ixon-dark);
+    letter-spacing: -0.3px;
+  }
+  .topbar-left .topbar-sub {
+    font-size: 12px;
+    color: var(--ixon-grey);
+    margin-top: 1px;
+  }
+  .topbar-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 11px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .pill-internal {
+    background: var(--ixon-blue);
+    color: #fff;
+  }
+  .pill-living {
+    background: var(--ixon-yellow);
+    color: var(--ixon-dark);
+  }
+  .topbar-meta {
+    font-size: 12px;
+    color: var(--ixon-grey);
+  }
+
+  .content {
+    max-width: 1000px;
+    padding: 40px 48px 80px;
+  }
+
+  /* ── SECTION ── */
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 90px;
+  }
+  .section-eyebrow {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--ixon-blue);
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--ixon-dark);
+    letter-spacing: -0.4px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .section-lede {
+    font-size: 14px;
+    color: var(--ixon-grey);
+    margin-bottom: 24px;
+    max-width: 780px;
+    line-height: 1.6;
+  }
+  .section-divider {
+    height: 3px;
+    width: 40px;
+    background: var(--ixon-yellow);
+    margin-bottom: 22px;
+  }
+
+  h3.subhead {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ixon-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin: 28px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ixon-light-grey);
+  }
+  h4.subsub {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ixon-blue);
+    margin: 20px 0 8px;
+  }
+
+  p {
+    color: var(--ixon-dark);
+    margin-bottom: 12px;
+    line-height: 1.65;
+  }
+  p.muted { color: var(--ixon-grey); font-size: 13px; }
+
+  ul.clean, ol.clean {
+    padding-left: 20px;
+    margin-bottom: 14px;
+  }
+  ul.clean li, ol.clean li {
+    color: var(--ixon-dark);
+    margin-bottom: 6px;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+  ul.clean li strong { color: var(--ixon-dark); }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .b-verified { background: var(--green-bg); color: var(--green); }
+  .b-unverified { background: var(--orange-bg); color: var(--orange); }
+  .b-inference { background: var(--info-bg); color: var(--ixon-blue); }
+  .b-internal { background: var(--ixon-blue); color: var(--ixon-yellow); }
+  .b-action { background: var(--ixon-yellow); color: var(--ixon-dark); }
+  .b-open { background: var(--red-bg); color: var(--red); }
+  .b-phil { background: var(--ixon-blue); color: #fff; }
+  .b-max { background: #6E48C5; color: #fff; }
+  .b-alex { background: #0A8E7C; color: #fff; }
+
+  /* ── CARDS ── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: var(--ixon-offwhite);
+    border-radius: 10px;
+    padding: 18px;
+    border-top: 4px solid var(--ixon-blue);
+  }
+  .kpi-card.accent { border-top-color: var(--ixon-yellow); }
+  .kpi-card.warn { border-top-color: var(--orange); }
+  .kpi-card.dark { border-top-color: var(--ixon-blue); }
+  .kpi-value {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--ixon-dark);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .kpi-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ixon-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 6px;
+  }
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--ixon-grey);
+    line-height: 1.4;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--ixon-offwhite);
+    border-left: 4px solid var(--ixon-blue);
+    border-radius: 0 8px 8px 0;
+    padding: 18px 22px;
+    margin: 18px 0;
+  }
+  .callout.warn {
+    background: var(--orange-bg);
+    border-left-color: var(--orange);
+  }
+  .callout.danger {
+    background: var(--red-bg);
+    border-left-color: var(--red);
+  }
+  .callout.success {
+    background: var(--green-bg);
+    border-left-color: var(--green);
+  }
+  .callout.dark {
+    background: var(--ixon-blue);
+    border-left-color: var(--ixon-yellow);
+    color: rgba(255,255,255,0.95);
+  }
+  .callout.dark p, .callout.dark li { color: rgba(255,255,255,0.95); }
+  .callout-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--ixon-dark);
+    margin-bottom: 8px;
+  }
+  .callout.warn .callout-title { color: var(--orange); }
+  .callout.danger .callout-title { color: var(--red); }
+  .callout.success .callout-title { color: var(--green); }
+  .callout.dark .callout-title { color: var(--ixon-yellow); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout p { font-size: 13.5px; line-height: 1.65; }
+
+  /* ── TABLES ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 16px 0;
+    background: #fff;
+    border: 1px solid var(--ixon-light-grey);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .data-table th {
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #fff;
+    padding: 11px 14px;
+    background: var(--ixon-blue);
+  }
+  .data-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--ixon-light-grey);
+    color: var(--ixon-dark);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .data-table tbody tr:last-child td { border-bottom: none; }
+  .data-table tbody tr:nth-child(even) { background: var(--ixon-offwhite); }
+  .data-table .col-label {
+    font-weight: 600;
+    color: var(--ixon-dark);
+    width: 26%;
+  }
+  .data-table .col-narrow { width: 14%; }
+  .data-table .col-mid { width: 22%; }
+
+  /* ── DEAL/ITEM CARDS ── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 12px 0;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 12px 0;
+  }
+  .item-card {
+    background: #fff;
+    border: 1px solid var(--ixon-border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    position: relative;
+  }
+  .item-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: 8px 0 0 8px;
+    background: var(--ixon-blue);
+  }
+  .item-card.green::before { background: var(--green); }
+  .item-card.orange::before { background: var(--orange); }
+  .item-card.red::before { background: var(--red); }
+  .item-card.dark::before { background: var(--ixon-blue); }
+  .item-card.yellow::before { background: var(--ixon-yellow); }
+
+  .item-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ixon-dark);
+    margin-bottom: 8px;
+  }
+  .item-meta {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .item-detail {
+    font-size: 13px;
+    color: var(--ixon-grey);
+    line-height: 1.6;
+  }
+  .item-detail ul { padding-left: 16px; margin: 4px 0; }
+  .item-detail li { margin-bottom: 3px; }
+
+  /* ── STAKEHOLDER ── */
+  .stakeholder-card {
+    background: #fff;
+    border: 1px solid var(--ixon-border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .stakeholder-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--ixon-blue);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .stakeholder-info { flex: 1; min-width: 0; }
+  .stakeholder-name {
+    font-weight: 600;
+    color: var(--ixon-dark);
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  .stakeholder-role {
+    font-size: 12px;
+    color: var(--ixon-grey);
+    margin-bottom: 6px;
+  }
+  .stakeholder-note {
+    font-size: 12px;
+    color: var(--ixon-dark);
+    line-height: 1.5;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    margin: 16px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--ixon-light-grey);
+  }
+  .tl-item {
+    position: relative;
+    padding-bottom: 18px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--ixon-blue);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px var(--ixon-blue);
+  }
+  .tl-item.next::before { background: var(--ixon-yellow); box-shadow: 0 0 0 2px var(--ixon-yellow); }
+  .tl-item.future::before { background: #fff; box-shadow: 0 0 0 2px var(--ixon-light-grey); }
+  .tl-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ixon-dark);
+    margin-bottom: 2px;
+  }
+  .tl-detail {
+    font-size: 12.5px;
+    color: var(--ixon-grey);
+    line-height: 1.55;
+  }
+
+  /* ── AGENDA ── */
+  .agenda-row {
+    display: grid;
+    grid-template-columns: 100px 130px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--ixon-light-grey);
+    align-items: start;
+  }
+  .agenda-row:last-child { border-bottom: none; }
+  .agenda-time {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: var(--ixon-blue);
+    font-weight: 500;
+  }
+  .agenda-owner {
+    font-size: 12px;
+    color: var(--ixon-grey);
+  }
+  .agenda-block {
+    font-size: 13.5px;
+    color: var(--ixon-dark);
+    line-height: 1.55;
+  }
+
+  /* ── BRIEF MESSAGE ── */
+  .brief-msg {
+    background: var(--ixon-offwhite);
+    border-radius: 10px;
+    padding: 28px 32px;
+    border: 1px solid var(--ixon-light-grey);
+    margin: 16px 0;
+    position: relative;
+  }
+  .brief-msg-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--ixon-light-grey);
+  }
+  .brief-msg-meta-from {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: var(--ixon-grey);
+  }
+  .brief-msg-meta-from strong { color: var(--ixon-dark); }
+  .brief-msg p { font-size: 13.5px; margin-bottom: 12px; line-height: 1.7; }
+  .brief-msg ul { padding-left: 18px; margin-bottom: 12px; }
+  .brief-msg li { font-size: 13.5px; margin-bottom: 6px; line-height: 1.65; }
+  .copy-btn {
+    background: var(--ixon-blue);
+    color: #fff;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 5px;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background 0.15s;
+  }
+  .copy-btn:hover { background: var(--ixon-dark); }
+  .copy-btn.copied { background: var(--green); }
+
+  /* ── ACTION TABLE ── */
+  .action-table .col-owner { width: 13%; }
+  .action-table .col-status { width: 14%; }
+  .action-table .col-action { width: 73%; }
+
+  /* ── DECISION LOG ── */
+  .log-entry {
+    border-left: 3px solid var(--ixon-light-grey);
+    padding: 10px 16px;
+    margin-bottom: 10px;
+    background: #fff;
+    border-radius: 0 6px 6px 0;
+  }
+  .log-entry.confirmed { border-left-color: var(--green); }
+  .log-entry.open { border-left-color: var(--orange); }
+  .log-entry.blocked { border-left-color: var(--red); }
+  .log-meta {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: var(--ixon-grey);
+    margin-bottom: 4px;
+  }
+  .log-text {
+    font-size: 13px;
+    color: var(--ixon-dark);
+    line-height: 1.55;
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    margin-top: 60px;
+    padding-top: 28px;
+    border-top: 2px solid var(--ixon-dark);
+    font-size: 11.5px;
+    color: var(--ixon-grey);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .doc-footer strong { color: var(--ixon-dark); }
+
+
+
+  /* ── QUICK CALL CONTROL ── */
+  .quick-panel {
+    background: linear-gradient(135deg, #FFFFFF 0%, var(--ixon-offwhite) 100%);
+    border: 1px solid var(--ixon-border);
+    border-top: 5px solid var(--ixon-yellow);
+    border-radius: 14px;
+    padding: 22px;
+    margin: 18px 0 28px;
+    color: var(--ixon-dark);
+    box-shadow: 0 14px 30px rgba(2,23,82,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .quick-panel::after {
+    content: '';
+    position: absolute;
+    right: -70px;
+    top: -70px;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background: rgba(16,89,210,0.06);
+    pointer-events: none;
+  }
+  .quick-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--ixon-dark);
+    position: relative;
+    z-index: 1;
+  }
+  .quick-subtitle {
+    font-size: 13px;
+    color: var(--ixon-grey);
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .quick-card {
+    background: #fff;
+    border: 1px solid var(--ixon-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 8px 18px rgba(2,23,82,0.05);
+  }
+  .quick-card.owner-phil { border-top: 4px solid var(--ixon-yellow); }
+  .quick-card.owner-max { border-top: 4px solid #6E48C5; }
+  .quick-card.owner-alex { border-top: 4px solid #0A8E7C; }
+  .quick-card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .45px;
+    text-transform: uppercase;
+    color: var(--ixon-dark);
+    margin-bottom: 8px;
+  }
+  .quick-card.owner-max .quick-card-title { color: #6E48C5; }
+  .quick-card.owner-alex .quick-card-title { color: #0A8E7C; }
+  .quick-card ul { padding-left: 16px; margin: 0; }
+  .quick-card li { color: var(--ixon-dark); font-size: 12.5px; line-height: 1.45; margin-bottom: 5px; }
+  .command-strip {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 1fr;
+    gap: 12px;
+    margin: 18px 0 26px;
+  }
+  .command-tile {
+    border: 1px solid var(--ixon-border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    background: #fff;
+    box-shadow: 0 8px 18px rgba(2,23,82,0.05);
+  }
+  .command-tile.primary { background: var(--ixon-offwhite); border-top: 4px solid var(--ixon-blue); }
+  .command-tile.warn { border-top: 4px solid var(--orange); }
+  .command-tile.success { border-top: 4px solid var(--green); }
+  .command-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: .7px; color: var(--ixon-grey); font-weight: 700; margin-bottom: 6px; }
+  .command-value { font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 700; color: var(--ixon-dark); line-height: 1.25; }
+  .command-note { font-size: 12.5px; color: var(--ixon-grey); line-height: 1.45; margin-top: 6px; }
+
+
+  .today-goals {
+    background: #FFFFFF;
+    border: 1px solid var(--ixon-border);
+    border-radius: 16px;
+    padding: 22px;
+    margin: 8px 0 20px;
+    box-shadow: 0 14px 28px rgba(2,23,82,0.07);
+  }
+  .today-goals-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--ixon-light-grey);
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+  }
+  .today-goals-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ixon-dark);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .today-goals-subtitle {
+    font-size: 13px;
+    color: var(--ixon-grey);
+    line-height: 1.45;
+  }
+  .today-goals-badge {
+    flex-shrink: 0;
+    background: var(--ixon-yellow);
+    color: var(--ixon-dark);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: .65px;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .goal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .goal-card {
+    background: var(--ixon-offwhite);
+    border: 1px solid var(--ixon-border);
+    border-radius: 12px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .goal-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--ixon-blue);
+  }
+  .goal-card.revenue::before { background: var(--green); }
+  .goal-card.blocker::before { background: var(--orange); }
+  .goal-card.horizon::before { background: #6E48C5; }
+  .goal-number {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ixon-grey);
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .goal-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ixon-dark);
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .goal-text {
+    font-size: 12.75px;
+    color: var(--ixon-grey);
+    line-height: 1.5;
+  }
+  .source-box {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid var(--ixon-light-grey);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .source-box-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .65px;
+    color: var(--ixon-blue);
+  }
+  .source-box-text {
+    font-size: 12.75px;
+    color: var(--ixon-dark);
+    line-height: 1.55;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .app { grid-template-columns: 240px 1fr; }
+    .content { padding: 32px 32px 60px; }
+    .topbar { padding: 16px 32px; }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .quick-grid, .command-strip, .goal-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { position: relative; height: auto; }
+    .grid-2, .grid-3, .quick-grid, .command-strip, .goal-grid, .source-box { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-eyebrow">Call Control Brief</div>
+      <div class="brand-title">MiTek Inc.</div>
+      <div class="brand-sub">Existing customer · Multi-site rollout candidate</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Frame</div>
+      <a class="nav-link" href="#exec"><span class="nav-num">01</span><span>Executive summary</span></a>
+      <a class="nav-link" href="#snapshot"><span class="nav-num">02</span><span>Account snapshot</span></a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Source discipline</div>
+      <a class="nav-link" href="#confirmed"><span class="nav-num">03</span><span>Confirmed facts</span></a>
+      <a class="nav-link" href="#unverified"><span class="nav-num">04</span><span>Unverified items</span></a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Context</div>
+      <a class="nav-link" href="#last-call"><span class="nav-num">05</span><span>Last call recap</span></a>
+      <a class="nav-link" href="#interpretation"><span class="nav-num">06</span><span>Strategic interpretation</span></a>
+      <a class="nav-link" href="#stakeholders"><span class="nav-num">07</span><span>Stakeholder map</span></a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Architecture</div>
+      <a class="nav-link" href="#rollout"><span class="nav-num">08</span><span>Rollout wave plan</span></a>
+      <a class="nav-link" href="#governance"><span class="nav-num">09</span><span>Access governance</span></a>
+      <a class="nav-link" href="#tech-issues"><span class="nav-num">10</span><span>Open technical issues</span></a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Execution</div>
+      <a class="nav-link" href="#roles"><span class="nav-num">11</span><span>Roles for the call</span></a>
+      <a class="nav-link" href="#agenda"><span class="nav-num">12</span><span>Meeting agenda</span></a>
+      <a class="nav-link" href="#questions"><span class="nav-num">13</span><span>Discovery questions</span></a>
+      <a class="nav-link" href="#risks"><span class="nav-num">14</span><span>Risks to avoid</span></a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Forward</div>
+      <a class="nav-link" href="#next"><span class="nav-num">15</span><span>Next steps & owners</span></a>
+      <a class="nav-link" href="#artifacts"><span class="nav-num">16</span><span>Follow-up artifacts</span></a>
+      <a class="nav-link" href="#brief"><span class="nav-num">17</span><span>Briefing message</span></a>
+      <a class="nav-link" href="#log"><span class="nav-num">18</span><span>Decision log</span></a>
+    </div>
+
+    <div class="sidebar-footer">
+      <strong style="color: rgba(255,255,255,0.85); display:block; margin-bottom:6px;">Living document</strong>
+      Rev 2.1 · Source-grounded. Anti-hallucination strict. Verified, unverified, and inferred items are explicitly distinguished throughout.
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1>MiTek Call Control Brief <span style="font-size:12px; font-weight:600; color:#626262; margin-left:8px;">v2.1</span></h1>
+        <div class="topbar-sub">High-level call control · Role alignment · Rollout-readiness checkpoint</div>
+      </div>
+      <div class="topbar-right">
+        <span class="pill pill-internal">Internal · Confidential</span>
+        <span class="pill pill-living">Rev 2.1</span>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ============ 01 EXECUTIVE SUMMARY ============ -->
+      <section id="exec">
+        <div class="section-eyebrow">01 · FRAME</div>
+        <h2 class="section-title">Executive summary</h2>
+        <div class="section-divider"></div>
+
+        <div class="today-goals">
+          <div class="today-goals-header">
+            <div>
+              <div class="today-goals-title">Top 3 goals for today's call</div>
+              <div class="today-goals-subtitle">Keep the call commercially useful: confirm expansion motion, expose blockers, and frame Edge App Management without letting it hijack the hardware rollout.</div>
+            </div>
+            <div class="today-goals-badge">Tippy top priority</div>
+          </div>
+          <div class="goal-grid">
+            <div class="goal-card revenue">
+              <div class="goal-number">Goal 01</div>
+              <div class="goal-title">Confirm the next facility order path — fast.</div>
+              <div class="goal-text">Find out whether Missouri's 50–60 device wave is active, delayed, or blocked. If active, identify ordering timeline and next commercial step. If delayed, identify the exact gate.</div>
+            </div>
+            <div class="goal-card blocker">
+              <div class="goal-number">Goal 02</div>
+              <div class="goal-title">Identify what is holding them back.</div>
+              <div class="goal-text">Separate real blockers from noise: Ethernet drops, budget, IT/security signoff, Entra/SSO, VPN/client friction, Earth City device issue, procurement, or unclear internal owner.</div>
+            </div>
+            <div class="goal-card horizon">
+              <div class="goal-number">Goal 03</div>
+              <div class="goal-title">Place Edge App Management on the horizon.</div>
+              <div class="goal-text">Acknowledge Docker / Edge App interest as a future-value path, especially if they want monitoring without a full PLC. Do not overpromise entitlement, pricing, or release timing.</div>
+            </div>
+          </div>
+          <div class="source-box">
+            <div class="source-box-label">Where this strategy comes from</div>
+            <div class="source-box-text">March 6 notes: Josh/David described IXON as a network-appliance layer, discussed using gateways as firewall barriers in front of devices, stated Missouri could require another 50–60 devices, and raised access governance, Entra/SCIM, VPN client, Earth City connectivity, and Docker/Edge App topics. Today's call should convert those notes into ordering clarity and a rollout operating plan.</div>
+          </div>
+        </div>
+
+        <div class="quick-panel">
+          <div class="quick-title">Keep-us-on-track callouts</div>
+          <div class="quick-subtitle">Use these as the mental dashboard after the top 3 goals. The win is fast clarity on rollout motion, not a feature scavenger hunt.</div>
+          <div class="quick-grid">
+            <div class="quick-card owner-phil">
+              <div class="quick-card-title">Phil · Control the room</div>
+              <ul>
+                <li>Open with rollout-readiness, not license archaeology.</li>
+                <li>Confirm whether Missouri 50–60 devices is moving, delayed, or blocked.</li>
+                <li>Keep favorable hardware pricing internal unless procurement/timing forces it.</li>
+              </ul>
+            </div>
+            <div class="quick-card owner-max">
+              <div class="quick-card-title">Max · Own architecture</div>
+              <ul>
+                <li>Validate groups, roles, access categories, SSO/Entra, and SCIM behavior.</li>
+                <li>Contain technical issues into a close-out path: Earth City, VPN client, branded portal.</li>
+                <li>Do not overpromise roadmap, entitlement, or release timing.</li>
+              </ul>
+            </div>
+            <div class="quick-card owner-alex">
+              <div class="quick-card-title">Alex · Operationalize adoption</div>
+              <ul>
+                <li>Listen for repeatable rollout requirements by facility wave.</li>
+                <li>Capture commitments and owners live.</li>
+                <li>Turn feature confusion into a checklist/cadence, not a generic follow-up.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="command-strip">
+          <div class="command-tile primary">
+            <div class="command-label">North star</div>
+            <div class="command-value">Protect hardware standardization first.</div>
+            <div class="command-note">SaaS/features matter only where they reduce rollout friction, improve governance, or create adoption leverage.</div>
+          </div>
+          <div class="command-tile warn">
+            <div class="command-label">Main diagnostic</div>
+            <div class="command-value">What must happen for the next PO?</div>
+            <div class="command-note">The answer determines whether this is an ordering motion, unblock motion, or later commercial timing conversation.</div>
+          </div>
+          <div class="command-tile success">
+            <div class="command-label">Do not let happen</div>
+            <div class="command-value">Feature-tour drift.</div>
+            <div class="command-note">Use feature questions to expose rollout readiness; do not let them consume the call.</div>
+          </div>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-label">Agents deployed</div>
+            <div class="kpi-value">~50</div>
+            <div class="kpi-sub">Current account telemetry / prompt-confirmed</div>
+          </div>
+          <div class="kpi-card accent">
+            <div class="kpi-label">Stated next wave</div>
+            <div class="kpi-value">50–60</div>
+            <div class="kpi-sub">Missouri facility · timing TBD</div>
+          </div>
+          <div class="kpi-card warn">
+            <div class="kpi-label">Last 6 mo growth</div>
+            <div class="kpi-value">+1</div>
+            <div class="kpi-sub">Inference: expansion may be paused</div>
+          </div>
+          <div class="kpi-card dark">
+            <div class="kpi-label">Commercial state</div>
+            <div class="kpi-value">HFA + Renewal</div>
+            <div class="kpi-sub">Closed-won HFA · Renewal open in SFDC</div>
+          </div>
+        </div>
+
+        <p>MiTek is at an inflection point. The HFA closed won on 5/31. A renewal is open in Salesforce. The customer's stated ask is feature/license clarity. The deeper diagnostic — and the real purpose of this call — is whether their planned multi-site rollout (Missouri, Arizona, Czech Republic, South Africa, UK Ewon swap, then broader product lines) is <strong>active</strong>, <strong>delayed</strong>, or <strong>blocked</strong>, and what IXON needs to do to help them scale safely.</p>
+
+        <div class="callout dark">
+          <div class="callout-title">The strategic frame</div>
+          <p>This is not a feature tour. The priority is to protect and accelerate hardware standardization across MiTek's facility waves and to lock the access-governance foundation MiTek's IT team needs to operate IXON as their secure remote-access / network-appliance layer at enterprise scale. SaaS and feature conversation is positioned only where it directly serves rollout, governance, or adoption.</p>
+        </div>
+      </section>
+
+      <!-- ============ 02 ACCOUNT SNAPSHOT ============ -->
+      <section id="snapshot">
+        <div class="section-eyebrow">02 · FRAME</div>
+        <h2 class="section-title">Account snapshot</h2>
+        <div class="section-divider"></div>
+
+        <table class="data-table">
+          <tbody>
+            <tr>
+              <td class="col-label">Account type</td>
+              <td>Existing customer · expansion / customer success motion</td>
+            </tr>
+            <tr>
+              <td class="col-label">Deployment posture</td>
+              <td>~50 agents deployed (Phil-confirmed). Multi-site rollout pattern emerging across MiTek's facility footprint.</td>
+            </tr>
+            <tr>
+              <td class="col-label">Commercial state</td>
+              <td>HFA closed-won 5/31 · Renewal opportunity open in Salesforce · Favorable Secure Edge Pro pricing in place <span class="badge b-internal">Internal only</span></td>
+            </tr>
+            <tr>
+              <td class="col-label">Strategic priority</td>
+              <td>Hardware standardization across facility waves. SaaS and features positioned as enablers of rollout, governance, and adoption — not as standalone upsell.</td>
+            </tr>
+            <tr>
+              <td class="col-label">External stakeholders</td>
+              <td>Josh Ennis · David Werner · Kent Anderson · Jason Moore (network) · Identity stakeholder TBD</td>
+            </tr>
+            <tr>
+              <td class="col-label">IXON team</td>
+              <td>
+                <span class="badge b-phil">Phil</span> Account owner ·
+                <span class="badge b-max">Max</span> Solutions Engineer ·
+                <span class="badge b-alex">Alex</span> Customer Solutions / Adoption (ramping into account)
+              </td>
+            </tr>
+            <tr>
+              <td class="col-label">Source discipline</td>
+              <td>All facts in this document are explicitly labeled as confirmed, unverified, inferred, or internal-only. No pricing, packaging, or roadmap claim is stated unless grounded.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ============ 03 CONFIRMED FACTS ============ -->
+      <section id="confirmed">
+        <div class="section-eyebrow">03 · SOURCE DISCIPLINE</div>
+        <h2 class="section-title">Confirmed facts</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">The items below are treated as authoritative for this document because Phil stated them directly. They are not independently document-verified against the uploaded IXON commercial materials.</p>
+
+        <div class="grid-2">
+          <div class="item-card green">
+            <div class="item-title">Deployment</div>
+            <div class="item-meta"><span class="badge b-verified">Confirmed</span></div>
+            <div class="item-detail">
+              <ul>
+                <li>MiTek is an existing IXON customer</li>
+                <li>~50 IXON agents deployed today</li>
+                <li>Account telemetry shows "Last 6 months: 1" agent <span class="badge b-inference">Inference</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="item-card green">
+            <div class="item-title">Commercial state</div>
+            <div class="item-meta"><span class="badge b-verified">Confirmed</span></div>
+            <div class="item-detail">
+              <ul>
+                <li>HFA / remote access opportunity closed-won 5/31</li>
+                <li>Renewal opportunity open in SFDC</li>
+                <li>Favorable Secure Edge Pro pricing in place <span class="badge b-internal">Internal only</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="item-card green">
+            <div class="item-title">Customer ask</div>
+            <div class="item-meta"><span class="badge b-verified">Confirmed</span></div>
+            <div class="item-detail">
+              <ul>
+                <li>MiTek asked for clarity on what features they have and don't have</li>
+                <li>License screenshot exists showing multiple enabled items <span class="badge b-unverified">Treat with care</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="item-card green">
+            <div class="item-title">Last call</div>
+            <div class="item-meta"><span class="badge b-verified">Confirmed</span></div>
+            <div class="item-detail">
+              <ul>
+                <li>March 6 IXON / MiTek Account &amp; Technical Architecture Review</li>
+                <li>Attendees: Phil, Max, Josh Ennis, David Werner, Kent Anderson, MiTek IT/network</li>
+                <li>Phil stated on the call that MiTek is on a legacy professional-style license that he understood to map roughly to Service Portal, Remote Access Plus, and Machine Insights Live. Treat as Phil-stated account context until verified against current segmentation/entitlement sources <span class="badge b-unverified">Do not customer-quote</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 04 UNVERIFIED ITEMS ============ -->
+      <section id="unverified">
+        <div class="section-eyebrow">04 · SOURCE DISCIPLINE</div>
+        <h2 class="section-title">Unverified items — do not overstate</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">These topics may surface in the conversation. Each is not yet grounded in the uploaded documents or in Phil's confirmed facts. They must be handled with explicit care.</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th class="col-mid">Topic</th><th>Why it must not be overstated</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>License screenshot entitlements</strong></td>
+              <td>Internal labels in the screenshot may not map cleanly to current SaaS segmentation or customer-facing packaging. Do not narrate enabled/disabled status as customer-facing fact.</td>
+            </tr>
+            <tr>
+              <td><strong>Legacy "professional-style" bundle composition</strong></td>
+              <td>Phil-stated on March 6 from memory as effectively SP + RA Plus + MI Live. Until cross-checked with the uploaded SaaS Module Price List and Segmentation 2026 documents, treat as a working assumption, not a verified bundle definition.</td>
+            </tr>
+            <tr>
+              <td><strong>Edge App Management — release / entitlement / pricing</strong></td>
+              <td>Discussed on March 6 as upcoming with a March 25 target. Do not represent current GA, current entitlement, or current pricing without document confirmation.</td>
+            </tr>
+            <tr>
+              <td><strong>Session recording</strong></td>
+              <td>Mentioned by Josh on March 6 as something he saw in an email. Max indicated it was close but not yet released. Do not represent as currently available.</td>
+            </tr>
+            <tr>
+              <td><strong>SSO enforcement / custom domain / white-label premium configuration</strong></td>
+              <td>Discussed as a likely configuration topic. Exact entitlement / configuration requirement to enforce Entra on a branded portal has not been verified.</td>
+            </tr>
+            <tr>
+              <td><strong>SCIM role replication</strong></td>
+              <td>Josh believed this was on a feature request list, not yet available. Do not represent as functional.</td>
+            </tr>
+            <tr>
+              <td><strong>IXON / Secure Edge security certifications</strong></td>
+              <td>Direct customer to trust.ixon.cloud rather than restating exact certifications from memory.</td>
+            </tr>
+            <tr>
+              <td><strong>Pricing, discount levers, renewal mechanics</strong></td>
+              <td>Do not lead with discount discussion. The favorable Secure Edge Pro position is internal context only.</td>
+            </tr>
+            <tr>
+              <td><strong>Roadmap timing</strong></td>
+              <td>No roadmap items are to be promised by date or scope. Use "on the roadmap" or "in development" framing where applicable, only when factually defensible.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ============ 05 LAST CALL RECAP ============ -->
+      <section id="last-call">
+        <div class="section-eyebrow">05 · CONTEXT</div>
+        <h2 class="section-title">Last call recap — March 6</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">Account &amp; Technical Architecture Review. Attendees: Phil, Max Lauer, Josh Ennis, David Werner, Kent Anderson, MiTek IT/network stakeholders.</p>
+
+        <h3 class="subhead">Customer-driven topics</h3>
+        <div class="grid-2">
+          <div class="item-card">
+            <div class="item-title">Feature / license clarity</div>
+            <div class="item-detail">Josh asked for a list of what is possible vs. what they have today. The surface ask driving the upcoming call.</div>
+          </div>
+          <div class="item-card">
+            <div class="item-title">Roles, groups, access categories</div>
+            <div class="item-detail">Josh wants a refresher and validation that the current user-access model will scale.</div>
+          </div>
+          <div class="item-card">
+            <div class="item-title">Azure Entra / B2B enforcement</div>
+            <div class="item-detail">Josh wants to control access through Azure identities and enforce login through Entra.</div>
+          </div>
+          <div class="item-card">
+            <div class="item-title">Identity-vs-device handshake</div>
+            <div class="item-detail">David owns devices but does not directly control identity. He emphasized this handshake is critical.</div>
+          </div>
+          <div class="item-card">
+            <div class="item-title">API / Armis integration</div>
+            <div class="item-detail">Josh raised idea of API integration with Armis. Security has not funded it; currently shelved.</div>
+          </div>
+          <div class="item-card">
+            <div class="item-title">Docker / Edge App Management interest</div>
+            <div class="item-detail">David exploring Docker-based monitoring as cost-saving alternative to full PLC. SSH client unavailability on managed laptops blocking experimentation.</div>
+          </div>
+        </div>
+
+        <h3 class="subhead">Operational issues raised</h3>
+        <div class="grid-2">
+          <div class="item-card red">
+            <div class="item-title">Earth City offline-device <span class="badge b-open">Open</span></div>
+            <div class="item-detail">Device online and pingable on the LAN but offline in IXON Cloud for 7 days. Max scoped as likely LAN/WAN config issue.</div>
+          </div>
+          <div class="item-card orange">
+            <div class="item-title">VPN client inconsistency <span class="badge b-open">Open</span></div>
+            <div class="item-detail">Works on some managed laptops, hangs on others. Edge browser is Intune-managed; users no longer have admin rights.</div>
+          </div>
+          <div class="item-card orange">
+            <div class="item-title">Branded portal vs. Entra discrepancy <span class="badge b-open">Open</span></div>
+            <div class="item-detail">AAD/Entra login option not appearing on branded portal. Josh suspects double-registration because branding was set up before Entra enforcement.</div>
+          </div>
+          <div class="item-card orange">
+            <div class="item-title">SCIM role replication gap <span class="badge b-open">Open</span></div>
+            <div class="item-detail">SCIM syncs users but does not assign IXON roles. Roles still assigned manually. Confirmed live behavior on the call.</div>
+          </div>
+        </div>
+
+        <h3 class="subhead">Architecture observations (from the call)</h3>
+        <ul class="clean">
+          <li><strong>Current group model</strong> — master group with subgroups across product lines. Internal vs. external group types (MiTek programmers vs. outside vendors like Minster, Eagle).</li>
+          <li><strong>Subgrouping fit</strong> — Max indicated MiTek's deployment scale justifies subgrouping; trade-off is added complexity.</li>
+          <li><strong>Vendor isolation principle</strong> — Vendors siloed by group. Roles inside the group should be generic (vendor, vendor admin, vendor technician). A palletizer vendor should never see stamping-press devices.</li>
+          <li><strong>Least-privilege gap</strong> — MiTek defaulting to "all devices" access category. A pending access request was identified as a good test case for least-privilege rebuild.</li>
+          <li><strong>Tags vs. groups</strong> — Josh raised tags as a possible alternative organizing layer. Not yet evaluated.</li>
+        </ul>
+
+        <h3 class="subhead">Action items still open from March 6</h3>
+        <ol class="clean">
+          <li>Schedule access management / SSO training session with Josh, David, Kent, Jason, and a MiTek identity stakeholder.</li>
+          <li>Reserve 10–15 minutes in that session to troubleshoot the Earth City offline-device issue.</li>
+          <li>Compile a v1 license/features summary for MiTek (Phil committed on March 6).</li>
+          <li>Send trust.ixon.cloud to MiTek's security team.</li>
+          <li>Send the meeting recording and recap.</li>
+        </ol>
+      </section>
+
+      <!-- ============ 06 STRATEGIC INTERPRETATION ============ -->
+      <section id="interpretation">
+        <div class="section-eyebrow">06 · CONTEXT</div>
+        <h2 class="section-title">Strategic interpretation</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">MiTek's surface ask is feature clarity. The deeper opportunity is multi-site hardware standardization with IXON as their secure remote-access / network-appliance layer.</p>
+
+        <div class="callout">
+          <div class="callout-title">Hardware-first protects the strategic priority</div>
+          <p>Devices in the ecosystem drive both customer value and IXON's WNC trajectory. The next 50–60 device wave is the most important thing to get unblocked. Feature clarity is a means; standardization is the end.</p>
+        </div>
+
+        <div class="callout success">
+          <div class="callout-title">Identity governance is a deal-shaper, not an obstacle</div>
+          <p>Josh explicitly said IT now treats IXON as a network appliance. Entra/SCIM enforcement, vendor isolation, and least-privilege are not blockers to overcome — they are the language IT uses to certify IXON for enterprise scale. Lean into this. It is the rationale for standardization, not an obstruction to it.</p>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">Feature clarity converts to adoption velocity</div>
+          <p>MiTek does not need a feature inventory. They need to know which capabilities matter for their next rollout wave, which capabilities are already enabled but underused, and which capabilities to evaluate later. The v1 license summary should be structured this way (see section 16).</p>
+        </div>
+
+        <div class="callout warn">
+          <div class="callout-title">Friction risks are political risks</div>
+          <p>Earth City offline-device, VPN client inconsistency, and the branded-portal / Entra issue are operational items but each is also a credibility test with IT. Resolution speed signals scalability. Max should own the technical close-out path.</p>
+        </div>
+
+        <div class="callout danger">
+          <div class="callout-title">Premature SaaS / Edge App expansion is a trap</div>
+          <p>Edge App Management, API, session recording, access request, and Docker-based monitoring are all interesting to MiTek but none belongs in the upsell column until the rollout foundation (identity, group structure, hardware standardization) is locked. Selling them now risks both the foundation and the customer's confidence.</p>
+        </div>
+      </section>
+
+      <!-- ============ 07 STAKEHOLDER MAP ============ -->
+      <section id="stakeholders">
+        <div class="section-eyebrow">07 · CONTEXT</div>
+        <h2 class="section-title">Stakeholder map</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">Working stakeholder picture based on the March 6 call. To be validated and expanded during the upcoming review.</p>
+
+        <h3 class="subhead">MiTek</h3>
+        <div class="grid-2">
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar">JE</div>
+            <div class="stakeholder-info">
+              <div class="stakeholder-name">Josh Ennis</div>
+              <div class="stakeholder-role">Primary champion · Drives identity / governance conversation</div>
+              <div class="stakeholder-note">Owns the feature-clarity ask. Pushing toward Entra enforcement and structured roles. Closest to IT's appliance framing of IXON.</div>
+            </div>
+          </div>
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar">DW</div>
+            <div class="stakeholder-info">
+              <div class="stakeholder-name">David Werner</div>
+              <div class="stakeholder-role">Device / engineering owner · Group structure architect</div>
+              <div class="stakeholder-note">Owns devices, not identity. Built the original internal/external group model. Driving Docker / Edge App interest. Aware of identity-device handshake risk.</div>
+            </div>
+          </div>
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar">KA</div>
+            <div class="stakeholder-info">
+              <div class="stakeholder-name">Kent Anderson</div>
+              <div class="stakeholder-role">Network team · Platform support</div>
+              <div class="stakeholder-note">Part of IT's appliance-support model for IXON. Validate his expectations of operational responsibility and escalation path.</div>
+            </div>
+          </div>
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar">JM</div>
+            <div class="stakeholder-info">
+              <div class="stakeholder-name">Jason Moore</div>
+              <div class="stakeholder-role">Network team · Referenced as part of platform support</div>
+              <div class="stakeholder-note">Josh identified Jason as part of the network team supporting IXON. Invite/validate role for the access management / SSO session.</div>
+            </div>
+          </div>
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar" style="background: var(--ixon-grey);">?</div>
+            <div class="stakeholder-info">
+              <div class="stakeholder-name">Identity / cloud identity owner</div>
+              <div class="stakeholder-role">Not yet named</div>
+              <div class="stakeholder-note">Josh said he could get this person available for a follow-up. Critical for SSO/Entra enforcement work.</div>
+            </div>
+          </div>
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar" style="background: var(--ixon-grey);">?</div>
+            <div class="stakeholder-info">
+              <div class="stakeholder-name">Security team contact</div>
+              <div class="stakeholder-role">Not yet named</div>
+              <div class="stakeholder-note">Owns Armis tooling; previously declined to fund API integration. trust.ixon.cloud delivery target.</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="subhead">IXON</h3>
+        <div class="grid-3">
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar" style="background: var(--ixon-blue);">PB</div>
+            <div class="stakeholder-info">
+              <div class="stakeholder-name">Phil Belue</div>
+              <div class="stakeholder-role">Account Executive</div>
+              <div class="stakeholder-note">Account owner. Holds commercial relationship and meeting control.</div>
+            </div>
+          </div>
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar" style="background: #6E48C5;">ML</div>
+            <div class="stakeholder-info">
+              <div class="stakeholder-name">Max Lauer</div>
+              <div class="stakeholder-role">Solutions Engineer</div>
+              <div class="stakeholder-note">Owns access architecture, SSO/Entra/SCIM behavior, and open technical issues.</div>
+            </div>
+          </div>
+          <div class="stakeholder-card">
+            <div class="stakeholder-avatar" style="background: #0A8E7C;">AO</div>
+            <div class="stakeholder-info">
+              <div class="stakeholder-name">Alex Oprea</div>
+              <div class="stakeholder-role">Customer Solutions</div>
+              <div class="stakeholder-note">Ramping into account. Owns adoption structure, deployment checklist, and recap.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 08 ROLLOUT WAVE PLAN ============ -->
+      <section id="rollout">
+        <div class="section-eyebrow">08 · ARCHITECTURE</div>
+        <h2 class="section-title">Rollout wave plan</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">As stated by MiTek on the March 6 call. Treat as customer-stated projection — not a committed forecast. Validating each wave's readiness is the primary diagnostic of the upcoming meeting.</p>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-label">Today — ~50 agents deployed</div>
+            <div class="tl-detail">Across MiTek's existing facilities. Last 6 months: +1 agent. Possible expansion pause — to validate.</div>
+          </div>
+          <div class="tl-item next">
+            <div class="tl-label">Wave 1 — Missouri (Earth City) · 50–60 devices</div>
+            <div class="tl-detail">Stated as "imminent" on March 6. Gated on Ethernet drop quote / facility budget. Open Earth City offline-device issue must be resolved before this wave.</div>
+          </div>
+          <div class="tl-item future">
+            <div class="tl-label">Wave 2 — Arizona facility</div>
+            <div class="tl-detail">Mentioned as following Missouri. Volume not yet specified.</div>
+          </div>
+          <div class="tl-item future">
+            <div class="tl-label">Wave 3 — Czech Republic (~5–6 devices)</div>
+            <div class="tl-detail">First international wave. Smaller volume; readiness check on regional connectivity, IXON-side regional servers, and any local IT/security review.</div>
+          </div>
+          <div class="tl-item future">
+            <div class="tl-label">Wave 4 — South Africa (~10 devices)</div>
+            <div class="tl-detail">Second international wave. Same readiness model as Czech.</div>
+          </div>
+          <div class="tl-item future">
+            <div class="tl-label">Wave 5 — UK Ewon swap-out</div>
+            <div class="tl-detail">Replacement program, not greenfield. Volume not yet stated. Validate timing and procurement model.</div>
+          </div>
+          <div class="tl-item future">
+            <div class="tl-label">Wave 6+ — Broader product lines (incl. builder products)</div>
+            <div class="tl-detail">Josh's framing of the long-term cadence: "march of 50–60 devices every other month for 3–4 years." Aspirational customer projection, not committed.</div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <div class="callout-title">The diagnostic that matters</div>
+          <p>Each wave above is presumed active until validated otherwise. The upcoming call should explicitly confirm whether Wave 1 (Missouri) is moving, what is gating it, and whether the broader cadence is still real or has shifted.</p>
+        </div>
+      </section>
+
+      <!-- ============ 09 ACCESS GOVERNANCE ============ -->
+      <section id="governance">
+        <div class="section-eyebrow">09 · ARCHITECTURE</div>
+        <h2 class="section-title">Access governance model</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">Working architecture for MiTek's access governance — to be validated with Max and refined live with Josh and David. This is the foundation that must lock before broader feature/SaaS conversation is appropriate.</p>
+
+        <h3 class="subhead">Recommended hierarchy</h3>
+        <div class="grid-2">
+          <div class="item-card">
+            <div class="item-title">Group structure</div>
+            <div class="item-detail">
+              <ul>
+                <li>Master group: MiTek production equipment</li>
+                <li>Subgroup layer 1: Facility (Missouri, Arizona, Czech, South Africa, UK, etc.)</li>
+                <li>Subgroup layer 2: Equipment type / product line (stamping presses, palletizers, builder products, etc.)</li>
+                <li>Group <strong>type</strong> remains internal vs. external (MiTek vs. outside vendor)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item-card">
+            <div class="item-title">Role taxonomy (recommended)</div>
+            <div class="item-detail">
+              <ul>
+                <li>Corporate admin — full visibility across MiTek-internal groups</li>
+                <li>Facility admin — scoped to a single facility</li>
+                <li>Vendor admin — scoped to a vendor group; can manage own users only</li>
+                <li>Vendor technician — scoped to a vendor group; operate-only</li>
+                <li>View-only — for audit/compliance roles</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item-card">
+            <div class="item-title">Access category design</div>
+            <div class="item-detail">
+              <ul>
+                <li>Default "all devices" usage replaced with explicit access categories</li>
+                <li>Pending access request identified on March 6 to be the first least-privilege rebuild test case</li>
+                <li>Vendor access categories are equipment-type-scoped</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item-card">
+            <div class="item-title">Identity layer</div>
+            <div class="item-detail">
+              <ul>
+                <li>Entra-enforced login on portal (configuration to be confirmed by Max)</li>
+                <li>SCIM for user lifecycle management</li>
+                <li>Manual role assignment until SCIM role replication is generally available <span class="badge b-unverified">Roadmap-dependent</span></li>
+                <li>External vendors: Entra B2B if MiTek prefers central identity control; otherwise vendor-admin self-service</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <div class="callout-title">Core principle — least privilege, vendor isolation</div>
+          <p>The group is the box. The role determines what can be done inside the box. Vendors should never see equipment outside their assigned scope. Internal MiTek teams should be scoped by facility and equipment type unless the role explicitly justifies broader visibility. This is the durable model regardless of which features get added later.</p>
+        </div>
+      </section>
+
+      <!-- ============ 10 OPEN TECHNICAL ISSUES ============ -->
+      <section id="tech-issues">
+        <div class="section-eyebrow">10 · ARCHITECTURE</div>
+        <h2 class="section-title">Open technical issues</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">Each item is both an operational issue and a credibility test with MiTek's IT team. Resolution speed signals scalability. Max owns the technical close-out path.</p>
+
+        <table class="data-table">
+          <thead>
+            <tr><th class="col-mid">Issue</th><th class="col-narrow">Owner</th><th class="col-narrow">Status</th><th>Path forward</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Earth City offline-device</strong><br><span class="muted" style="font-size:12px;">Online &amp; pingable on LAN, offline in cloud for 7 days</span></td>
+              <td><span class="badge b-max">Max</span></td>
+              <td><span class="badge b-open">Open</span></td>
+              <td>Inspect gateway config. Validate outbound port / DNS / DHCP behavior. Reserve 10–15 min in next session for live troubleshoot.</td>
+            </tr>
+            <tr>
+              <td><strong>VPN client inconsistency</strong><br><span class="muted" style="font-size:12px;">Hangs on some Intune-managed laptops</span></td>
+              <td><span class="badge b-max">Max</span></td>
+              <td><span class="badge b-open">Open</span></td>
+              <td>Confirm browser permissions / Intune profile interactions. Produce reproducible diagnostic note for MiTek IT.</td>
+            </tr>
+            <tr>
+              <td><strong>Branded portal vs. Entra discrepancy</strong><br><span class="muted" style="font-size:12px;">AAD/Entra option missing from branded portal</span></td>
+              <td><span class="badge b-max">Max</span></td>
+              <td><span class="badge b-open">Open</span></td>
+              <td>Validate suspected double-registration. Confirm whether SSO enforcement requires custom-domain / white-label premium configuration <span class="badge b-unverified">To be verified</span>.</td>
+            </tr>
+            <tr>
+              <td><strong>SCIM role replication gap</strong><br><span class="muted" style="font-size:12px;">Users sync; roles do not</span></td>
+              <td><span class="badge b-max">Max</span></td>
+              <td><span class="badge b-open">Awaiting roadmap</span></td>
+              <td>Confirm current behavior. Do not represent role replication as functional. Flag interest internally; manage customer expectation.</td>
+            </tr>
+            <tr>
+              <td><strong>Default "all devices" access usage</strong><br><span class="muted" style="font-size:12px;">Least-privilege rebuild needed</span></td>
+              <td><span class="badge b-max">Max</span> <span class="badge b-alex">Alex</span></td>
+              <td><span class="badge b-action">Action</span></td>
+              <td>Use the pending access request as test case for the new least-privilege model. Document the pattern for repeatable rollout.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ============ 11 ROLES FOR THE CALL ============ -->
+      <section id="roles">
+        <div class="section-eyebrow">11 · EXECUTION</div>
+        <h2 class="section-title">Roles for the call</h2>
+        <div class="section-divider"></div>
+
+        <h3 class="subhead"><span class="badge b-phil">Phil</span> Account Owner</h3>
+        <ul class="clean">
+          <li><strong>Own meeting control.</strong> Frame the call around rollout readiness, not feature touring. Use the recommended opening (section 12).</li>
+          <li><strong>Diagnose the next wave.</strong> Confirm whether Missouri is still active and what is gating it (Ethernet drops, IT, security, procurement).</li>
+          <li><strong>Protect hardware standardization.</strong> Position SaaS and features as accelerators of standardization. Do not lead with discount or commercial pressure.</li>
+          <li><strong>Hold the v1 license/features commitment.</strong> Deliverable Phil owes from March 6 — structure in section 16.</li>
+          <li><strong>Hand the technical model cleanly to Max.</strong> When the conversation moves into identity, groups, roles, vendor isolation, or open issues, Max owns the floor.</li>
+          <li><strong>Set up Alex's role.</strong> Briefly position Alex as the customer success engineer who will operationalize MiTek's adoption path.</li>
+        </ul>
+
+        <h3 class="subhead"><span class="badge b-max">Max</span> Solutions Engineer</h3>
+        <ul class="clean">
+          <li><strong>Own technical architecture and access model.</strong> Group structure, subgrouping decision, role design, access category buildout, vendor isolation, least-privilege walkthrough.</li>
+          <li><strong>Clarify SSO / Entra / SCIM behavior.</strong> Confirm what is functioning today vs. what requires configuration vs. what is on the roadmap. Do not promise role replication via SCIM.</li>
+          <li><strong>Own the open issues.</strong> Earth City offline-device path. VPN client diagnostic path. Branded-portal/Entra configuration check.</li>
+          <li><strong>Position Edge App Management carefully.</strong> If David raises Docker, frame Edge App Management as a capability in development. Do not represent release date, entitlement, or pricing.</li>
+          <li><strong>Bring Alex along.</strong> Today's call is the moment to anchor Alex inside MiTek's technical context. Brief her ahead of the call so she can absorb without front-end framing during the call itself.</li>
+        </ul>
+
+        <h3 class="subhead"><span class="badge b-alex">Alex</span> Customer Solutions / Adoption</h3>
+        <ul class="clean">
+          <li><strong>Own adoption structure and follow-up.</strong> Convert feature/license confusion into a clear customer success plan.</li>
+          <li><strong>Build the MiTek-specific deployment checklist.</strong> Network/security/endpoint prerequisites for each new facility wave. Outline in section 16.</li>
+          <li><strong>Identify enabled-but-underused capabilities — only when verified.</strong> Do not represent features as enabled unless explicitly confirmed by IXON systems or by Max.</li>
+          <li><strong>Document next steps and ownership.</strong> Capture commitments live in the call; reflect them in the recap.</li>
+          <li><strong>Establish cadence.</strong> Position customer success as a repeatable engagement model that supports facility rollout — not a generic monthly check-in.</li>
+        </ul>
+      </section>
+
+      <!-- ============ 12 MEETING AGENDA ============ -->
+      <section id="agenda">
+        <div class="section-eyebrow">12 · EXECUTION</div>
+        <h2 class="section-title">Meeting agenda</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">Suggested 60-minute structure. Adjust to match MiTek's available time.</p>
+
+        <div class="agenda-row" style="border-bottom: 2px solid var(--ixon-light-grey); padding-bottom: 8px;">
+          <div class="agenda-time" style="font-weight:700;">Time</div>
+          <div class="agenda-owner" style="font-weight:700;">Owner</div>
+          <div class="agenda-block" style="font-weight:700;">Block</div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">0:00 – 0:05</div>
+          <div class="agenda-owner"><span class="badge b-phil">Phil</span></div>
+          <div class="agenda-block"><strong>Opening frame.</strong> Use recommended opening below. Position Alex.</div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">0:05 – 0:20</div>
+          <div class="agenda-owner"><span class="badge b-phil">Phil</span></div>
+          <div class="agenda-block"><strong>Rollout-readiness diagnostic.</strong> Missouri status, gating factors, internal ownership of rollout, facility-wave cadence.</div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">0:20 – 0:40</div>
+          <div class="agenda-owner"><span class="badge b-max">Max</span></div>
+          <div class="agenda-block"><strong>Access governance review.</strong> Group / role / access category model. Internal-vs-external segmentation. Entra enforcement and SCIM behavior. Vendor isolation principle.</div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">0:40 – 0:50</div>
+          <div class="agenda-owner"><span class="badge b-max">Max</span></div>
+          <div class="agenda-block"><strong>Open issues triage.</strong> Earth City offline device. VPN client behavior. Branded-portal / Entra configuration.</div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">0:50 – 0:58</div>
+          <div class="agenda-owner"><span class="badge b-phil">Phil</span> <span class="badge b-alex">Alex</span></div>
+          <div class="agenda-block"><strong>Feature/license clarity framing.</strong> Position the v1 license summary as the deliverable. Avoid live feature-touring.</div>
+        </div>
+        <div class="agenda-row">
+          <div class="agenda-time">0:58 – 1:00</div>
+          <div class="agenda-owner"><span class="badge b-phil">Phil</span></div>
+          <div class="agenda-block"><strong>Next steps and owners.</strong></div>
+        </div>
+
+        <h3 class="subhead">Recommended opening — Phil</h3>
+        <div class="callout dark">
+          <p>"The goal today is not to turn this into a generic product tour. Based on the last conversation, it sounds like MiTek is moving from initial deployment into a more standardized rollout model, with IT, network, security, engineering, and external vendors all becoming part of the operating structure.</p>
+          <p>So what we'd like to do is three things:</p>
+          <p>1. Confirm what is currently enabled in your environment.<br>
+             2. Map those capabilities against how MiTek actually plans to use IXON across facilities, vendors, and internal teams.<br>
+             3. Identify the practical next steps needed before the next facility wave starts moving.</p>
+          <p>That way we separate what exists from what matters for MiTek's rollout."</p>
+        </div>
+      </section>
+
+      <!-- ============ 13 DISCOVERY QUESTIONS ============ -->
+      <section id="questions">
+        <div class="section-eyebrow">13 · EXECUTION</div>
+        <h2 class="section-title">Discovery questions</h2>
+        <div class="section-divider"></div>
+
+        <h3 class="subhead">Rollout state</h3>
+        <ol class="clean">
+          <li>Last time we spoke, Missouri sounded like the next major deployment wave with another 50–60 devices expected once Ethernet/drop planning was finalized. Has that started, is it still pending, or has timing changed?</li>
+          <li>Are we still thinking in facility waves — Missouri, Arizona, international, UK Ewon replacement, then broader product lines — or has the internal plan changed?</li>
+          <li>Are the next devices waiting on Ethernet drops, budget approval, IT/security signoff, procurement timing, or something else?</li>
+          <li>Who owns rollout internally now — engineering, network, security, plant operations, or a shared team?</li>
+          <li>What would need to be true for MiTek to confidently standardize the next facility wave on IXON?</li>
+        </ol>
+
+        <h3 class="subhead">Intent behind the feature ask</h3>
+        <ol class="clean" start="6">
+          <li>When you ask "what do we have vs. what are we missing," are you mainly trying to reduce cost, improve security governance, support rollout, or identify new use cases?</li>
+        </ol>
+
+        <h3 class="subhead">Identity and access governance</h3>
+        <ol class="clean" start="7">
+          <li>Do you want IXON access fully governed through Entra, with local IXON identity minimized where possible?</li>
+          <li>For external vendors, do you want vendor admins to manage their own users inside a limited box, or do you want MiTek to centrally control every vendor user?</li>
+          <li>Are access request and temporary access part of your desired operating model, or do you prefer standing access by role/group?</li>
+          <li>What is the cleanest way for MiTek to define access — by facility, equipment type, vendor, product line, or a combination?</li>
+        </ol>
+
+        <h3 class="subhead">Open technical issues</h3>
+        <ol class="clean" start="11">
+          <li>Are VPN client issues still occurring on managed laptops?</li>
+          <li>Is the Earth City offline-device issue still open?</li>
+        </ol>
+
+        <h3 class="subhead">Future operating model</h3>
+        <ol class="clean" start="13">
+          <li>Would a MiTek-specific deployment checklist for network/security/endpoint prerequisites help before each facility rollout?</li>
+        </ol>
+      </section>
+
+      <!-- ============ 14 RISKS ============ -->
+      <section id="risks">
+        <div class="section-eyebrow">14 · EXECUTION</div>
+        <h2 class="section-title">Risks to avoid</h2>
+        <div class="section-divider"></div>
+
+        <div class="grid-2">
+          <div class="item-card red">
+            <div class="item-title">Overstating entitlements</div>
+            <div class="item-detail">Treating items in the license screenshot as customer-facing fact when they may not map to current packaging.</div>
+          </div>
+          <div class="item-card red">
+            <div class="item-title">Implying roadmap features are available</div>
+            <div class="item-detail">Edge App Management, session recording, SCIM role replication. Do not represent as currently available, entitled, or priced unless verified.</div>
+          </div>
+          <div class="item-card red">
+            <div class="item-title">Leading with discount pressure</div>
+            <div class="item-detail">The favorable Secure Edge Pro position is internal context only. Do not surface in the meeting.</div>
+          </div>
+          <div class="item-card red">
+            <div class="item-title">Feature-by-feature tour drift</div>
+            <div class="item-detail">Letting the customer pull the call into a comprehensive walkthrough of every capability. Defeats the rollout-readiness diagnostic.</div>
+          </div>
+          <div class="item-card red">
+            <div class="item-title">Losing the Missouri thread</div>
+            <div class="item-detail">Allowing tactical conversation to consume the call without confirming the next 50–60 device wave's status and gating factors.</div>
+          </div>
+          <div class="item-card red">
+            <div class="item-title">SaaS-as-main-objective trap</div>
+            <div class="item-detail">Treating SaaS as the main motion before the rollout model and access governance are stable. Premature.</div>
+          </div>
+          <div class="item-card red">
+            <div class="item-title">Open-issue absorption</div>
+            <div class="item-detail">Letting open technical issues consume the entire call without identifying the commercial / rollout blocker behind them.</div>
+          </div>
+          <div class="item-card red">
+            <div class="item-title">Feature-clarity-as-cover</div>
+            <div class="item-detail">Allowing "we need feature clarity" to mask the real diagnostic question: is expansion moving or stalled?</div>
+          </div>
+          <div class="item-card red">
+            <div class="item-title">Roadmap promises</div>
+            <div class="item-detail">Promising any delivery date or scope for any roadmap item without document confirmation.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 15 NEXT STEPS ============ -->
+      <section id="next">
+        <div class="section-eyebrow">15 · FORWARD</div>
+        <h2 class="section-title">Next steps &amp; owners</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">Each item should leave the upcoming call with a named owner and a target date.</p>
+
+        <table class="data-table action-table">
+          <thead>
+            <tr><th class="col-owner">Owner</th><th class="col-status">Status</th><th class="col-action">Action</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge b-phil">Phil</span></td>
+              <td><span class="badge b-action">Owed</span></td>
+              <td>Deliver the v1 license/features summary (structured as enabled-and-relevant / enabled-but-underused / future-value). Outline in section 16.</td>
+            </tr>
+            <tr>
+              <td><span class="badge b-phil">Phil</span></td>
+              <td><span class="badge b-action">Owed</span></td>
+              <td>Confirm Missouri rollout timing and gating factors. If gated, identify which gate IXON can accelerate.</td>
+            </tr>
+            <tr>
+              <td><span class="badge b-phil">Phil</span></td>
+              <td><span class="badge b-action">Owed</span></td>
+              <td>Send recap and meeting recording. Deliver trust.ixon.cloud to MiTek security team if not already sent.</td>
+            </tr>
+            <tr>
+              <td><span class="badge b-max">Max</span></td>
+              <td><span class="badge b-action">Owed</span></td>
+              <td>Schedule the access management / SSO training session. Include 10–15 minutes for Earth City troubleshooting. Invite Jason Moore and a MiTek identity stakeholder.</td>
+            </tr>
+            <tr>
+              <td><span class="badge b-max">Max</span></td>
+              <td><span class="badge b-action">Owed</span></td>
+              <td>Document the recommended group / role / access category model for MiTek and circulate as a working draft.</td>
+            </tr>
+            <tr>
+              <td><span class="badge b-max">Max</span></td>
+              <td><span class="badge b-open">Open</span></td>
+              <td>Resolve VPN client diagnostic path. Confirm browser permissions, Intune profile interactions, and provide a reproducible troubleshooting note.</td>
+            </tr>
+            <tr>
+              <td><span class="badge b-max">Max</span></td>
+              <td><span class="badge b-open">Open</span></td>
+              <td>Validate branded-portal vs. portal.ixon.cloud Entra configuration; confirm whether double-registration is the cause.</td>
+            </tr>
+            <tr>
+              <td><span class="badge b-alex">Alex</span></td>
+              <td><span class="badge b-action">Owed</span></td>
+              <td>Build a v1 MiTek-specific deployment checklist (network / security / endpoint prerequisites per facility wave).</td>
+            </tr>
+            <tr>
+              <td><span class="badge b-alex">Alex</span></td>
+              <td><span class="badge b-action">Owed</span></td>
+              <td>Build a customer success cadence proposal aligned to MiTek's facility-wave model — not a generic monthly check-in.</td>
+            </tr>
+            <tr>
+              <td><span class="badge b-alex">Alex</span></td>
+              <td><span class="badge b-action">Owed</span></td>
+              <td>Capture commitments live during the call and own the recap structure.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ============ 16 FOLLOW-UP ARTIFACTS ============ -->
+      <section id="artifacts">
+        <div class="section-eyebrow">16 · FORWARD</div>
+        <h2 class="section-title">Follow-up artifacts</h2>
+        <div class="section-divider"></div>
+
+        <h3 class="subhead">v1 License &amp; Capability Summary <span class="badge b-phil">Phil</span></h3>
+        <p class="muted">MiTek-facing. Structured into three buckets — explicitly labeled and source-grounded.</p>
+        <ul class="clean">
+          <li><strong>Bucket A — Enabled today and relevant to rollout.</strong> Capabilities confirmed enabled and directly supporting the next facility wave (e.g., remote access, fleet management, role-based access if verified).</li>
+          <li><strong>Bucket B — Enabled today but potentially underused.</strong> Capabilities confirmed enabled where current usage does not match the entitlement (e.g., access categories defaulting to "all devices").</li>
+          <li><strong>Bucket C — Available, optional, or future-value.</strong> Capabilities relevant once deployment scales (e.g., Edge App Management, API, session recording, access request) — labeled by status: in development / available add-on / requires evaluation.</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Source rule.</strong> No item enters this document without verification against either the current IXON segmentation/price-list materials, entitlement source, or direct confirmation from Max / IXON systems, or explicit confirmation from Max / IXON systems. Items that cannot be verified are explicitly omitted, not described.</p>
+        </div>
+
+        <h3 class="subhead">MiTek Facility Deployment Checklist <span class="badge b-alex">Alex</span></h3>
+        <ul class="clean">
+          <li>Network prerequisites — outbound ports, firewall rules, DNS/DHCP behavior</li>
+          <li>Security prerequisites — Entra group provisioning, SCIM sync verification, role-assignment process</li>
+          <li>Endpoint prerequisites — VPN client deployment, Intune compatibility notes, browser/permission requirements</li>
+          <li>Hardware prerequisites — SKU standard, antenna configuration, mounting/cabinet expectations</li>
+          <li>Per-facility readiness gate — what must be true before the next batch of devices is shipped</li>
+        </ul>
+
+        <h3 class="subhead">Access Governance Working Document <span class="badge b-max">Max</span></h3>
+        <p class="muted">Internal first, then customer-shareable.</p>
+        <ul class="clean">
+          <li>Recommended group / subgroup hierarchy for MiTek's product-line + facility model</li>
+          <li>Recommended role taxonomy (corporate admin, facility admin, vendor admin, vendor technician, view-only)</li>
+          <li>Recommended access category design (least-privilege, vendor isolation, equipment-type segmentation)</li>
+          <li>SSO/Entra enforcement configuration steps and known constraints</li>
+          <li>Vendor onboarding flow</li>
+        </ul>
+
+        <h3 class="subhead">Earth City Offline-Device Troubleshooting Note <span class="badge b-max">Max</span></h3>
+        <ul class="clean">
+          <li>Gateway configuration findings</li>
+          <li>LAN/WAN port behavior</li>
+          <li>DNS/DHCP / IP lease confirmation</li>
+          <li>Resolution and root cause</li>
+        </ul>
+      </section>
+
+      <!-- ============ 17 BRIEFING MESSAGE ============ -->
+      <section id="brief">
+        <div class="section-eyebrow">17 · FORWARD</div>
+        <h2 class="section-title">Briefing message</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">Drop this directly into Slack or Teams ahead of the call. Phil-authored voice; Max and Alex audience.</p>
+
+        <div class="brief-msg">
+          <div class="brief-msg-meta">
+            <div class="brief-msg-meta-from">From: <strong>Phil Belue</strong> · To: <strong>Max Lauer, Alex Oprea</strong> · Subject: MiTek prep — read before the call</div>
+            <button class="copy-btn" onclick="copyBrief(this)">Copy message</button>
+          </div>
+          <div id="brief-content">
+            <p>Quick context drop ahead of MiTek. Full prep doc attached, but here's the 60-second read so we walk in aligned.</p>
+
+            <p><strong>Frame.</strong> This is not a feature tour. MiTek's surface ask is "what do we have, what are we missing." The real question is whether their multi-site rollout (Missouri next, then Arizona, Czech, South Africa, UK Ewon swap, then broader product lines) is active, delayed, or blocked. Hardware standardization is the priority. SaaS/features only show up where they directly serve rollout, governance, or adoption.</p>
+
+            <p><strong>What's confirmed.</strong> ~50 agents deployed. HFA closed-won 5/31. Renewal open in SFDC. Favorable Secure Edge Pro pricing in place — internal context only, do not surface. Last-6-months agent count is 1, which suggests expansion may not have accelerated yet (inference, not a stated customer position).</p>
+
+            <p><strong>What we are NOT doing.</strong> No exact entitlement claims off the license screenshot. No release-date or pricing claims on Edge App Management, session recording, SCIM role replication, or anything else we can't ground in a current document. No discount conversation.</p>
+
+            <p><strong>Roles for the call:</strong></p>
+            <ul>
+              <li><strong>Phil</strong> — meeting control. Diagnose Missouri timing and gating factors. Hold the v1 license-summary commitment from March 6. Position Alex.</li>
+              <li><strong>Max</strong> — own access architecture (groups, roles, access categories, vendor isolation, least-privilege). Own SSO/Entra/SCIM clarification — do not promise role replication via SCIM. Own the open issues: Earth City offline device, VPN client inconsistency on managed laptops, branded-portal/Entra config check.</li>
+              <li><strong>Alex</strong> — absorb the technical context, capture commitments live, own the recap structure. Build a v1 MiTek-specific facility deployment checklist (network/security/endpoint prerequisites) coming out of this call. Customer success cadence should be facility-wave-aligned, not generic monthly.</li>
+            </ul>
+
+            <p><strong>Open thread to land.</strong> The v1 license/capability summary I owe MiTek will be structured into three buckets: enabled-and-relevant-to-rollout / enabled-but-underused / available-or-future-value. No item enters that doc unless it's grounded in the current segmentation, price list, or confirmed by Max / IXON systems.</p>
+
+            <p>Full prep doc linked. Agenda, questions, risks, next steps — all there.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 18 DECISION LOG ============ -->
+      <section id="log">
+        <div class="section-eyebrow">18 · FORWARD</div>
+        <h2 class="section-title">Decision log</h2>
+        <div class="section-divider"></div>
+        <p class="section-lede">Living record of what's been decided, what's open, and what's blocked. Update after each call.</p>
+
+        <h3 class="subhead">Confirmed</h3>
+        <div class="log-entry confirmed">
+          <div class="log-meta">5/31 · Commercial</div>
+          <div class="log-text">HFA / remote access opportunity closed-won.</div>
+        </div>
+        <div class="log-entry confirmed">
+          <div class="log-meta">March 6 · Architecture</div>
+          <div class="log-text">MiTek discussed a potential multi-site rollout path (Missouri, Arizona, Czech Republic, South Africa, UK Ewon swap, broader product lines). Treat as customer-stated direction, not committed forecast.</div>
+        </div>
+        <div class="log-entry confirmed">
+          <div class="log-meta">March 6 · Governance</div>
+          <div class="log-text">Internal vs. external group-type model is directionally correct per Max's review.</div>
+        </div>
+        <div class="log-entry confirmed">
+          <div class="log-meta">March 6 · IT posture</div>
+          <div class="log-text">MiTek IT now treats IXON as a network appliance. Network team (Kent Anderson, Jason Moore) included in support.</div>
+        </div>
+
+        <h3 class="subhead">Open</h3>
+        <div class="log-entry open">
+          <div class="log-meta">Wave 1 · Missouri</div>
+          <div class="log-text">Stated as imminent on March 6, gated on Ethernet drop quote / facility budget. Status as of upcoming call: TBD.</div>
+        </div>
+        <div class="log-entry open">
+          <div class="log-meta">Identity · Entra enforcement</div>
+          <div class="log-text">Branded portal vs. portal.ixon.cloud Entra discrepancy. Suspected double-registration. Configuration validation pending Max.</div>
+        </div>
+        <div class="log-entry open">
+          <div class="log-meta">Endpoint · VPN client</div>
+          <div class="log-text">VPN client behavior inconsistent on Intune-managed laptops. Diagnostic note pending Max.</div>
+        </div>
+        <div class="log-entry open">
+          <div class="log-meta">Network · Earth City</div>
+          <div class="log-text">Device online and pingable on LAN, offline in cloud for 7 days. Likely LAN/WAN configuration.</div>
+        </div>
+        <div class="log-entry open">
+          <div class="log-meta">Governance · Least-privilege rebuild</div>
+          <div class="log-text">Pending access request to be used as test case for the new least-privilege model.</div>
+        </div>
+
+        <h3 class="subhead">Blocked / awaiting roadmap</h3>
+        <div class="log-entry blocked">
+          <div class="log-meta">SCIM · Role replication</div>
+          <div class="log-text">Believed to be on a feature request list. Roles still assigned manually. Not to be represented as functional.</div>
+        </div>
+        <div class="log-entry blocked">
+          <div class="log-meta">Security · API / Armis integration</div>
+          <div class="log-text">Security team has not funded the cost. Shelved by MiTek for the time being.</div>
+        </div>
+      </section>
+
+      <!-- ============ FOOTER ============ -->
+      <div class="doc-footer">
+        <div>
+          <strong>IXON Cloud North America</strong> · Internal · Confidential<br>
+          MiTek Call Control Brief · Rev 2.1
+        </div>
+        <div style="text-align: right;">
+          <strong>Document discipline.</strong> Anti-hallucination strict.<br>
+          Confirmed / unverified / inferred items are explicitly distinguished throughout.
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // Active section highlighting on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  function setActive() {
+    const scrollPos = window.scrollY + 120;
+    let current = '';
+    sections.forEach(sec => {
+      if (sec.offsetTop <= scrollPos) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+
+  // Copy briefing message
+  function copyBrief(btn) {
+    const content = document.getElementById('brief-content');
+    // Convert HTML to plain text with reasonable formatting
+    let text = '';
+    content.querySelectorAll('p, li').forEach(el => {
+      if (el.tagName === 'LI') {
+        text += '• ' + el.innerText.trim() + '\n';
+      } else {
+        text += el.innerText.trim() + '\n\n';
+      }
+    });
+    text = text.trim();
+
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy message';
+        btn.classList.remove('copied');
+      }, 2200);
+    }).catch(() => {
+      btn.textContent = 'Copy failed';
+    });
+  }
+</script>
+
+</body>
+</html>
